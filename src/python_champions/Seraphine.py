@@ -26,10 +26,10 @@ class Seraphine(Champion):
     def auto_attack(self):
         if self.note_stacks == 0:
             damage_type = "PHYSICAL_DAMAGE"
-            return [damage_type, self.base_attack_damage]
+            return [damage_type, self.total_attack_damage, None]  # see explanation at wrapper_func
         else:
             damage_type = "MIXED_DAMAGE"
-            return [damage_type, ["PHYSICAL_DAMAGE", self.base_attack_damage], self.passive_ability()]
+            return [damage_type, ["PHYSICAL_DAMAGE", self.total_attack_damage], self.passive_ability()]
 
     # returns value of the additional damage (only works for the notes she creates by herself so max is 4 currently)
     def passive_ability(self):
@@ -42,13 +42,13 @@ class Seraphine(Champion):
             self.note_stacks = 4
 
         if self.champion_level < 6:
-            damage = [damage_type, round((4 + ap_amplifier_based_on_ability_scaling) * self.note_stacks, 2)]
+            damage = [damage_type, round((4 + ap_amplifier_based_on_ability_scaling) * self.note_stacks, 2), None]
         elif self.champion_level < 11:
-            damage = [damage_type, round((8 + ap_amplifier_based_on_ability_scaling) * self.note_stacks, 2)]
+            damage = [damage_type, round((8 + ap_amplifier_based_on_ability_scaling) * self.note_stacks, 2), None]
         elif self.champion_level < 16:
-            damage = [damage_type, round((14 + ap_amplifier_based_on_ability_scaling) * self.note_stacks, 2)]
+            damage = [damage_type, round((14 + ap_amplifier_based_on_ability_scaling) * self.note_stacks, 2), None]
         elif self.champion_level < 19:
-            damage = [damage_type, round((24 + ap_amplifier_based_on_ability_scaling) * self.note_stacks, 2)]
+            damage = [damage_type, round((24 + ap_amplifier_based_on_ability_scaling) * self.note_stacks, 2), None]
 
         self.note_stacks = 0
         return damage
@@ -62,24 +62,14 @@ class Seraphine(Champion):
         if skill_level > -1:
             self.note_stacks += 1
 
-            enemy_missing_health_perc = round((self.enemy_max_hp - enemy_current_hp) / self.enemy_max_hp, 6)
+            enemy_missing_health_perc = self.get_missing_health(self.enemy_max_hp, enemy_current_hp)
 
-            missing_health_iterator = 0.0003
-            damage_amplifier_missing_health = 0.0002
-            for i in range(0, 2501):
-                if enemy_missing_health_perc < 0.0003:
-                    damage_amplifier_missing_health = 0
-                    break
-                elif missing_health_iterator < enemy_missing_health_perc < (
-                        missing_health_iterator + 0.0003) or enemy_missing_health_perc == missing_health_iterator:
-                    break
-                missing_health_iterator = round(missing_health_iterator + 0.0003, 5)
-                damage_amplifier_missing_health = round(damage_amplifier_missing_health + 0.0002, 5)
+            damage_amplifier_missing_health = self.get_amp_based_on_missing_health(enemy_missing_health_perc, 0.0003, 0.0002, 0.75)
 
-            damage_total_without_amp = self.get_dmg_based_on_flat_and_percentage_values(key, skill_level, 0, 0, "AP")
-            damage_total_with_amp = damage_total_without_amp[0] + (damage_total_without_amp[0] * damage_amplifier_missing_health)
+            damage_total_without_amp = self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")
+            damage_total_with_amp = damage_total_without_amp[1] + (damage_total_without_amp[1] * damage_amplifier_missing_health)
 
-            return [damage_total_without_amp[1], damage_total_with_amp]
+            return [damage_total_without_amp[1], damage_total_with_amp, None]
 
     def w_ability(self, skill_level=-1):
         return None
@@ -89,14 +79,14 @@ class Seraphine(Champion):
 
         if skill_level > -1:
             self.note_stacks += 1
-            return self.something(key, skill_level, 0, 0, "AP")
+            return self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")
 
     def r_ability(self, skill_level=-1):
         key = "R"
 
         if skill_level > -1:
             self.note_stacks += 1
-            return self.something(key, skill_level, 0, 0, "AP")
+            return self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")
 
 
 sera = Seraphine(get_dict("Seraphine"), 1000)

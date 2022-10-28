@@ -16,37 +16,37 @@ class Ahri(Champion):
         if skill_level > -1:
             if first_pass and last_pass:
                 return ["MIXED_DAMAGE",
-                        ["MAGIC_DAMAGE", self.something(key, skill_level, 0, 0, "AP")[1]],
-                        ["TRUE_DAMAGE", self.something(key, skill_level, 0, 0, "AP")[1]]]
+                        ["MAGIC_DAMAGE", self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1]],
+                        ["TRUE_DAMAGE", self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1]]]
             elif first_pass:
-                return ["MAGIC_DAMAGE", self.something(key, skill_level, 0, 0, "AP")[1]]
+                return ["MAGIC_DAMAGE", self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1], None]
             elif last_pass:
-                return ["TRUE_DAMAGE", self.something(key, skill_level, 0, 0, "AP")[1]]
+                return ["TRUE_DAMAGE", self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1], None]
 
     def w_ability(self, skill_level=-1, amount_hit=3):
         key = "W"
 
         if skill_level > -1:
             if amount_hit == 1:
-                return self.something(key, skill_level, 1, 0, "AP")
+                return self.wrapper_for_dmg(key, skill_level, 1, 0, "AP")
             elif amount_hit == 2:
-                first_hit = self.something(key, skill_level, 1, 0, "AP")[1]
-                second_hit = self.something(key, skill_level, 2, 0, "AP")[1]
-                return ["MAGIC_DAMAGE", first_hit + second_hit]
+                first_hit = self.wrapper_for_dmg(key, skill_level, 1, 0, "AP")[1]
+                second_hit = self.wrapper_for_dmg(key, skill_level, 2, 0, "AP")[1]
+                return ["MAGIC_DAMAGE", first_hit + second_hit, None]
             elif amount_hit == 3:
-                return self.something(key, skill_level, 2, 1, "AP")
+                return self.wrapper_for_dmg(key, skill_level, 2, 1, "AP")
 
     def e_ability(self, skill_level=-1):
         key = "E"
 
         if skill_level > -1:
-            return self.something(key, skill_level, 0, 0, "AP")
+            return self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")
 
     def r_ability(self, skill_level=-1, amount_used=1):
         key = "R"
 
         if skill_level > -1:
-            return [self.something(key, skill_level, 0, 0, "AP")[0], self.something(key, skill_level, 0, 0, "AP")[1] * amount_used]
+            return [self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[0], self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1] * amount_used, None]
 
 
 ahri = Ahri(get_dict("Ahri"))

@@ -1,4 +1,3 @@
-
 class Champion:
 
     def __init__(self, champ_dict):
@@ -31,7 +30,7 @@ class Champion:
         self.magic_resistance_per_level = self.champ_dict["stats"]["magicResistance"]["perLevel"]
 
         self.base_attack_damage = self.champ_dict["stats"]["attackDamage"]["flat"]
-        self.attack_damage_flat_per_level = self.champ_dict["stats"]["attackDamage"]["perLevel"]
+        self.attack_damage_per_level = self.champ_dict["stats"]["attackDamage"]["perLevel"]
 
         self.base_movespeed = self.champ_dict["stats"]["movespeed"]["flat"]
 
@@ -71,18 +70,27 @@ class Champion:
         self.attack_damage_based_on_level = None
         self.bonus_attack_speed = None
 
-        self.bonus_armor_flat = None
-        self.bonus_magic_resistance = None
-        self.bonus_attack_damage = None
-        self.bonus_health_points = None
-        self.bonus_mana = None
+        self.bonus_health_points = 0
+        self.bonus_mana = 0
+        self.bonus_armor_flat = 0
+        self.bonus_magic_resistance = 0
+        self.bonus_attack_damage = 0
 
-        self.total_armor = None
-        self.total_magic_resistance = None
-        self.total_attack_damage = None
-        self.total_health_points = None
-        self.total_mana = None
-        self.total_attack_speed = None
+        self.total_health_points = 0
+        self.total_mana = 0
+        self.total_armor = 0
+        self.total_magic_resistance = 0
+        self.total_attack_damage = 0
+        self.total_attack_speed = 0
+
+        self.mythic_armor_pen_percentage = None
+        self.mythic_magic_pen_percentage = None
+        self.mythic_tenacity = None
+        self.mythic_slow_resistance = None
+
+        # following to method calls only for test purposes
+        self.set_base_stats_based_on_level()
+        self.set_total_value_to_based_on_level()
 
         self.passive_ability_dict = self.get_ability_values("P")["P"][0]
         # self.q_ability_dict = self.get_ability_values("Q")["Q"][0]
@@ -93,19 +101,25 @@ class Champion:
     def set_champion_level(self, current_level):
         self.champion_level = current_level
 
-    def per_level_scaling(self, base_stat, growth_stat):
-        return round(base_stat + growth_stat * (self.champion_level - 1) * (0.7025 + 0.0175 * (self.champion_level - 1)), 2)
+    def per_level_scaling(self, base_stat, growth_stat, round_by):
+        return round(base_stat + growth_stat * (self.champion_level - 1) * (0.7025 + 0.0175 * (self.champion_level - 1)), round_by)
 
-    def set_base_stats_based_on_leve(self):
-        self.health_points_based_on_level = self.per_level_scaling(self.base_health, self.health_per_level)
-        self.health_points_regen_based_on_level = self.per_level_scaling(self.base_health_regen, self.health_regen_per_level)
-        self.mana_based_on_level = self.per_level_scaling(self.base_mana, self.mana_per_level)
-        self.mana_regen_based_on_level = self.per_level_scaling(self.base_mana_regen, self.mana_regen_per_level)
-        self.
+    def set_base_stats_based_on_level(self):
+        self.health_points_based_on_level = self.per_level_scaling(self.base_health, self.health_per_level, 2)
+        self.health_points_regen_based_on_level = self.per_level_scaling(self.base_health_regen, self.health_regen_per_level, 2)
+        self.mana_based_on_level = self.per_level_scaling(self.base_mana, self.mana_per_level, 2)
+        self.mana_regen_based_on_level = self.per_level_scaling(self.base_mana_regen, self.mana_regen_per_level, 2)
+        self.armor_based_on_level = self.per_level_scaling(self.base_armor, self.armor_per_level, 2)
+        self.magic_resistance_based_on_level = self.per_level_scaling(self.base_magic_resistance, self.magic_resistance_per_level, 2)
+        self.attack_damage_based_on_level = self.per_level_scaling(self.base_attack_damage, self.attack_damage_per_level, 2)
+        self.bonus_attack_speed = self.per_level_scaling(0, self.attack_speed_per_level / 100, 4)
 
-    def something(self, key, skill_level, effect_number, attribute_number, scaling_param):
-        damage_total_without_amp = self.get_dmg_based_on_flat_and_percentage_values(key, skill_level, effect_number, attribute_number, scaling_param)
-        return [damage_total_without_amp[1], round(damage_total_without_amp[0], 3)]
+    def set_total_value_to_based_on_level(self):
+        """
+        only for test purposes, champion uses total attack damage for auto attacks, which depend on item, but items not yet done
+        :return:
+        """
+        self.total_attack_damage = self.attack_damage_based_on_level + self.bonus_attack_damage
 
     def auto_attack(self):
         return ["PHYSICAL_DAMAGE", self.base_attack_damage]
@@ -125,12 +139,30 @@ class Champion:
     def r_ability(self, skill_level=-1):
         pass
 
-    def get_missing_hp_percentage(self, enemy_current_hp, enemy_max_hp):
-        pass
+    def get_missing_health(self, enemy_max_hp, enemy_current_hp):
+        return round((enemy_max_hp - enemy_current_hp) / enemy_max_hp, 6)
 
-    def get_dmg_based_on_flat_and_percentage_values(self, key, skill_level, effect_number, attribute_number, scaling_param: str):
+    def get_amp_based_on_missing_health(self, enemy_missing_health_perc, missing_health_iterator_static, damage_amplifier_missing_health_static,
+                                        missing_health_cap):
+        missing_health_iterator = missing_health_iterator_static
+        damage_amplifier_missing_health = damage_amplifier_missing_health_static
+        for i in range(0, int((missing_health_cap / missing_health_iterator)) + 1):
+            if enemy_missing_health_perc < missing_health_iterator_static:
+                damage_amplifier_missing_health = 0
+                break
+            elif missing_health_iterator < enemy_missing_health_perc < (
+                    missing_health_iterator + missing_health_iterator_static) or enemy_missing_health_perc == missing_health_iterator:
+                break
+            missing_health_iterator = round(missing_health_iterator + missing_health_iterator_static, 5)
+            damage_amplifier_missing_health = round(damage_amplifier_missing_health + damage_amplifier_missing_health_static, 5)
+
+        return damage_amplifier_missing_health
+
+    def get_dmg_based_on_flat_and_percentage_values(self, key, skill_level, effect_number, attribute_number, scaling_param: str,
+                                                    scaling_param_two: str = ""):
         """
 
+        :param scaling_param_two:
         :param scaling_param:
         :param attribute_number:
         :param effect_number:
@@ -138,21 +170,57 @@ class Champion:
         :param skill_level:
         :return:
         """
-        scaling_value = None
+        scaling_value_one = 0
+        scaling_value_two = 0
         if scaling_param == "AD":
-            scaling_value = self.base_attack_damage
+            scaling_value_one = self.total_attack_damage
+        elif scaling_param == "BONUS_AD":
+            scaling_value_one = self.bonus_attack_damage
         elif scaling_param == "AP":
-            scaling_value = self.ability_power_flat
+            scaling_value_one = self.ability_power_flat
+
+        if scaling_param_two:
+            if scaling_param_two == "AD":
+                scaling_value_two = self.total_attack_damage
+            elif scaling_param_two == "BONUS_AD":
+                scaling_value_two = self.bonus_attack_damage
+            elif scaling_param_two == "AP":
+                scaling_value_two = self.ability_power_flat
+
         if skill_level > -1:
             ability_value_dict = self.get_ability_values(key)[key][0]
 
             damage_type = ability_value_dict["damage_type"]
             damage_flat = ability_value_dict[f"effect{effect_number}"][f"attribute{attribute_number}"][0][0]
-            damage_scaling = []
+            damage_scaling_one = []
+            damage_scaling_two = []
             for i in ability_value_dict[f"effect{effect_number}"][f"attribute{attribute_number}"][1][0]:
-                damage_scaling.append((i / 100) * scaling_value)
+                damage_scaling_one.append((i / 100) * scaling_value_one)
 
-            return [damage_flat[skill_level] + damage_scaling[skill_level], damage_type]
+            if scaling_param_two:
+                for i in ability_value_dict[f"effect{effect_number}"][f"attribute{attribute_number}"][2][0]:
+                    damage_scaling_two.append((i / 100) * scaling_value_two)
+            if scaling_param_two:
+                return [damage_flat[skill_level] + damage_scaling_one[skill_level] + damage_scaling_two[skill_level], damage_type]
+            return [damage_flat[skill_level] + damage_scaling_one[skill_level], damage_type]
+
+    def wrapper_for_dmg(self, key, skill_level, effect_number, attribute_number, scaling_param: str, scaling_param_two: str = ""):
+        """
+        This function is just a simple wrapper for clarity when reading the code, which also rounds the dmg number.
+        Third Parameter in the return call is None because when to make the array that contains the damage numbers consistent, reason being if the
+        dmg is mixed (e.g. Physical and Magical) then you get three parameters, first one states the type of dmg, and the other to each instance of
+        the mixed dmg.
+        :param scaling_param_two:
+        :param key:
+        :param skill_level:
+        :param effect_number:
+        :param attribute_number:
+        :param scaling_param:
+        :return:
+        """
+        damage_total_without_amp = self.get_dmg_based_on_flat_and_percentage_values(key, skill_level, effect_number, attribute_number,
+                                                                                    scaling_param, scaling_param_two)
+        return [damage_total_without_amp[1], round(damage_total_without_amp[0], 3), None]
 
     def get_ability_values(self, key):
         ability_dict = self.champ_dict["abilities"][key]
