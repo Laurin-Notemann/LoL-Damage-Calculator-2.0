@@ -56,19 +56,21 @@ class Item:
                     self.mythic_ability_power_flat = item["stats"]["abilityPower"]["flat"]
                     self.mythic_attack_damage_flat = item["stats"]["attackDamage"]["flat"]
                     self.mythic_attack_speed_flat = item["stats"]["attackSpeed"]["flat"]
-                    self.mythic_critical_strike_chance_percentage = item["stats"]["criticalStrikeChance"]["percent"]
-                    self.mythic_gold_per_10_flat = item["stats"]["goldPer_10"]["flat"]
                     self.mythic_heal_and_shield_power_flat = item["stats"]["goldPer_10"]["percent"]
                     self.mythic_health_flat = item["stats"]["health"]["flat"]
-                    self.mythic_health_regen_flat = item["stats"]["healthRegen"]["flat"]
                     self.mythic_lethality_flat = item["stats"]["lethality"]["flat"]
-                    self.mythic_lifesteal_percentage = item["stats"]["lifesteal"]["percent"]
                     self.mythic_magic_penetration_flat = item["stats"]["magicPenetration"]["flat"]
                     self.mythic_magic_penetration_percentage = item["stats"]["magicPenetration"]["percent"]
                     self.mythic_magic_resistance_flat = item["stats"]["magicResistance"]["flat"]
-                    self.mythic_mana_flat = item["stats"]["mana"]["flat"]
-                    self.mythic_mana_regen_flat = item["stats"]["manaRegen"]["flat"]
                     self.mythic_movespeed_flat = item["stats"]["movespeed"]["flat"]
+                    self.mythic_movespeed_perc = item["stats"]["movespeed"]["percent"]
                     self.mythic_ability_haste_flat = item["stats"]["abilityHaste"]["flat"]
                     self.mythic_omnivamp_flat_percentage = item["stats"]["omnivamp"]["percent"]
                     self.mythic_tenacity_flat = item["stats"]["omnivamp"]["flat"]
+
+    def item_active(self):
+        pass
+
+    def item_passives(self):
+        pass
+

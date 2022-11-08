@@ -1,6 +1,6 @@
 import json
 
-from Champion import Champion
+from src.python_champions.Champion import Champion
 
 
 def get_dict(champion_name: str):
