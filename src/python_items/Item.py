@@ -1,7 +1,6 @@
 import json
 
-with open("../6673.json", "r") as read_file:
-    shieldbow = json.load(read_file)
+
 
 
 class Item:
@@ -68,9 +67,11 @@ class Item:
                     self.mythic_omnivamp_flat_percentage = item["stats"]["omnivamp"]["percent"]
                     self.mythic_tenacity_flat = item["stats"]["omnivamp"]["flat"]
 
-    def item_active(self):
+    def item_active_dmg(self):
         pass
 
-    def item_passives(self):
+    def item_passives_dmg(self, champions_scaling_param: str = "", champion_scaling_value=0):
         pass
 
+    def get_stats_from_json(self):
+        pass
