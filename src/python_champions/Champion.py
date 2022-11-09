@@ -67,6 +67,17 @@ class Champion:
         self.mythic_magic_pen_percentage = 0
         self.mythic_tenacity = 0
         self.mythic_slow_resistance = 0
+        self.total_attack_damage = 0
+
+        self.total_critical_chance = 0
+        self.total_lethality_flat = 0
+        self.total_magic_pen_flat = 0
+        self.total_ability_power_flat = 0
+        self.total_ability_haste = 0
+        self.total_heal_and_shield_power = 0
+        self.total_life_steal = 0
+        self.total_physical_vamp = 0
+        self.total_omnivamp = 0
 
         # following to method calls only for test purposes
         self.set_base_stats_based_on_level()
