@@ -4,6 +4,9 @@ from src.python_items.Item import Item
 
 class LudensTempest(Item):
 
+    def __init__(self, item_dict):
+        super().__init__(item_dict)
+
     def item_passives_dmg(self, champions_scaling_param: str = "", champion_scaling_value=0):
         damage_type = "MAGIC_DAMAGE"
         damage = 0

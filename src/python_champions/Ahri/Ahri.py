@@ -5,7 +5,7 @@ from src.python_champions.get_dict import get_dict
 class Ahri(Champion):
     def __init__(self, champ_dict):
         super().__init__(champ_dict)
-        self.ability_power_flat = 0
+        self.total_ability_power_flat = 0
 
     def passive_ability(self):
         pass

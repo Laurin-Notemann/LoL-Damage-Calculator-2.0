@@ -1,8 +1,6 @@
 import json
 
 
-
-
 class Item:
     def __init__(self, item_dict):
         self.item_dict = item_dict
@@ -31,7 +29,7 @@ class Item:
         self.item_attack_speed_flat = self.item_dict["stats"]["attackSpeed"]["flat"]
         self.item_critical_strike_chance_percentage = self.item_dict["stats"]["criticalStrikeChance"]["percent"]
         self.item_gold_per_10_flat = self.item_dict["stats"]["goldPer_10"]["flat"]
-        self.item_heal_and_shield_power_flat = self.item_dict["stats"]["goldPer_10"]["percent"]
+        self.item_heal_and_shield_power_flat = self.item_dict["stats"]["healAndShieldPower"]["percent"]
         self.item_health_flat = self.item_dict["stats"]["health"]["flat"]
         self.item_health_regen_flat = self.item_dict["stats"]["healthRegen"]["flat"]
         self.item_lethality_flat = self.item_dict["stats"]["lethality"]["flat"]
@@ -43,8 +41,27 @@ class Item:
         self.item_mana_regen_flat = self.item_dict["stats"]["manaRegen"]["flat"]
         self.item_movespeed_flat = self.item_dict["stats"]["movespeed"]["flat"]
         self.item_ability_haste_flat = self.item_dict["stats"]["abilityHaste"]["flat"]
-        self.item_omnivamp_flat_percentage = self.item_dict["stats"]["omnivamp"]["percent"]
+        self.item_omnivamp_percentage = self.item_dict["stats"]["omnivamp"]["percent"]
         self.item_tenacity_flat = self.item_dict["stats"]["omnivamp"]["flat"]
+        self.item_slow_resistance_flat = 0
+        self.item_physical_vamp = 0
+
+        self.mythic_armor_flat = 0
+        self.mythic_armor_penetration_percentage = 0
+        self.mythic_ability_power_flat = 0
+        self.mythic_attack_damage_flat = 0
+        self.mythic_attack_speed_flat = 0
+        self.mythic_heal_and_shield_power_flat = 0
+        self.mythic_health_flat = 0
+        self.mythic_lethality_flat = 0
+        self.mythic_magic_penetration_flat = 0
+        self.mythic_magic_penetration_percentage = 0
+        self.mythic_magic_resistance_flat = 0
+        self.mythic_movespeed_flat = 0
+        self.mythic_movespeed_perc = 0
+        self.mythic_ability_haste_flat = 0
+        self.mythic_omnivamp_flat_percentage = 0
+        self.mythic_tenacity_flat = 0
 
         # Mythic item stats
         if self.item_no_effects == False and not self.item_passives:

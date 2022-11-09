@@ -41,56 +41,36 @@ class Champion:
         self.attack_speed_per_level = self.champ_dict["stats"]["attackSpeed"]["perLevel"]  # This is a percentage
         self.attack_speed_ratio = self.champ_dict["stats"]["attackSpeedRatio"]["flat"]
 
-        self.ability_power_flat = None
+        self.gold_per_10 = 0
 
-        self.armor_pen_percentage = None
-        self.lethality_flat = None
-
-        self.ability_haste = None
-
-        self.magic_pen_percentage = None
-        self.magic_pen_flat = None
-
-        self.life_steal = None
-        self.physical_vamp = None
-        self.omnivamp = None
-
-        self.gold_per_10 = None
-
-        self.heal_and_shield_power = None
-        self.tenacity = None
-        self.slow_resistance = None
-
-        self.health_points_based_on_level = None
-        self.health_points_regen_based_on_level = None
-        self.mana_based_on_level = None
-        self.mana_regen_based_on_level = None
-        self.armor_based_on_level = None
-        self.magic_resistance_based_on_level = None
-        self.attack_damage_based_on_level = None
-        self.bonus_attack_speed = None
+        self.health_points_based_on_level = 0
+        self.health_points_regen_based_on_level = 0
+        self.mana_based_on_level = 0
+        self.mana_regen_based_on_level = 0
+        self.armor_based_on_level = 0
+        self.magic_resistance_based_on_level = 0
+        self.attack_damage_based_on_level = 0
+        self.bonus_attack_speed = 0
 
         self.bonus_health_points = 0
         self.bonus_mana = 0
-        self.bonus_armor_flat = 0
+        self.bonus_armor = 0
         self.bonus_magic_resistance = 0
         self.bonus_attack_damage = 0
 
         self.total_health_points = 0
+        self.total_health_regen = 0
         self.total_mana = 0
+        self.total_mana_regen = 0
         self.total_armor = 0
         self.total_magic_resistance = 0
-        self.total_attack_damage = 0
-        self.total_attack_speed = 0
-
-        self.mythic_armor_pen_percentage = None
-        self.mythic_magic_pen_percentage = None
-        self.mythic_tenacity = None
-        self.mythic_slow_resistance = None
+        self.mythic_magic_pen_percentage = 0
+        self.mythic_tenacity = 0
+        self.mythic_slow_resistance = 0
 
         # following to method calls only for test purposes
         self.set_base_stats_based_on_level()
-        self.set_total_value_to_based_on_level()
+        # self.set_total_value_to_based_on_level_and_item_stats()
 
         self.passive_ability_dict = self.get_ability_values("P")["P"][0]
         # self.q_ability_dict = self.get_ability_values("Q")["Q"][0]
@@ -114,12 +94,58 @@ class Champion:
         self.attack_damage_based_on_level = self.per_level_scaling(self.base_attack_damage, self.attack_damage_per_level, 2)
         self.bonus_attack_speed = self.per_level_scaling(0, self.attack_speed_per_level / 100, 4)
 
-    def set_total_value_to_based_on_level(self):
+    def set_total_value_to_based_on_level_and_item_stats(self, item_dict: dict):
         """
         only for test purposes, champion uses total attack damage for auto attacks, which depend on item, but items not yet done
         :return:
         """
+        # First we set all the bonus stats
+
+        for i in range(1, 7):
+            if item_dict[f"item{i}"] != "":
+                self.bonus_health_points += item_dict[f"item{i}"].item_health_flat
+                self.bonus_mana += item_dict[f"item{i}"].item_mana_flat
+                self.bonus_armor += item_dict[f"item{i}"].item_armor_flat
+                self.bonus_magic_resistance += item_dict[f"item{i}"].item_magic_resistance_flat
+                self.bonus_attack_damage += item_dict[f"item{i}"].item_attack_damage_flat
+                self.bonus_attack_speed += item_dict[f"item{i}"].item_attack_speed_flat
+
+                self.total_critical_chance += item_dict[f"item{i}"].item_critical_strike_chance_percentage
+                self.total_lethality_flat += item_dict[f"item{i}"].item_lethality_flat
+                self.total_magic_pen_flat += item_dict[f"item{i}"].item_magic_penetration_flat
+                self.total_ability_power_flat += item_dict[f"item{i}"].item_ability_power_flat
+                self.total_ability_haste += item_dict[f"item{i}"].item_ability_haste_flat
+                self.total_heal_and_shield_power += item_dict[f"item{i}"].item_heal_and_shield_power_flat
+                self.total_life_steal += item_dict[f"item{i}"].item_lifesteal_percentage
+                self.total_physical_vamp += item_dict[f"item{i}"].item_physical_vamp
+                self.total_omnivamp += item_dict[f"item{i}"].item_omnivamp_percentage
+
+                self.total_armor_pen_percentage = multiplicative_calc(self.total_armor_pen_percentage,
+                                                                      item_dict[f"item{i}"].item_armor_penetration_percentage)
+                self.total_magic_pen_percentage = multiplicative_calc(self.total_magic_pen_percentage,
+                                                                      item_dict[f"item{i}"].item_magic_penetration_percentage)
+                self.total_tenacity = multiplicative_calc(self.total_tenacity, item_dict[f"item{i}"].item_tenacity_flat)
+                self.total_slow_resistance = multiplicative_calc(self.total_slow_resistance, item_dict[f"item{i}"].item_slow_resistance_flat)
+
+                if item_dict[f"item{i}"].item_health_regen_flat > 0:
+                    self.total_health_regen += self.base_health_regen * item_dict[f"item{i}"].item_health_regen_flat
+
+                if item_dict[f"item{i}"].item_mana_regen_flat > 0:
+                    self.total_mana_regen += self.base_mana_regen * item_dict[f"item{i}"].item_mana_regen_flat
+
+
+
+        #  Then we calculate the total damage based on the base stats and the bonus stats
         self.total_attack_damage = self.attack_damage_based_on_level + self.bonus_attack_damage
+        self.total_health_points = self.health_points_based_on_level + self.bonus_health_points
+        self.total_mana = self.mana_based_on_level + self.bonus_mana
+        self.total_armor = self.armor_based_on_level + self.bonus_armor
+        self.total_magic_resistance = self.magic_resistance_based_on_level + self.bonus_magic_resistance
+
+        self.total_armor_pen_percentage = round(1 - self.total_armor_pen_percentage, 4)
+        self.total_magic_pen_percentage = round(1 - self.total_magic_pen_percentage, 4)
+        self.total_tenacity = round(1 - self.total_tenacity, 4)
+        self.total_slow_resistance = round(1 - self.total_slow_resistance, 4)
 
     def auto_attack(self):
         return ["PHYSICAL_DAMAGE", self.base_attack_damage]
@@ -177,7 +203,7 @@ class Champion:
         elif scaling_param == "BONUS_AD":
             scaling_value_one = self.bonus_attack_damage
         elif scaling_param == "AP":
-            scaling_value_one = self.ability_power_flat
+            scaling_value_one = self.total_ability_power_flat
 
         if scaling_param_two:
             if scaling_param_two == "AD":
@@ -185,7 +211,7 @@ class Champion:
             elif scaling_param_two == "BONUS_AD":
                 scaling_value_two = self.bonus_attack_damage
             elif scaling_param_two == "AP":
-                scaling_value_two = self.ability_power_flat
+                scaling_value_two = self.total_ability_power_flat
 
         if skill_level > -1:
             ability_value_dict = self.get_ability_values(key)[key][0]
@@ -256,3 +282,10 @@ class Champion:
             ability_attribute_modifier_value[key][ability_number]["damage_type"] = ability_dict[ability_number]["damageType"]
 
         return ability_attribute_modifier_value
+
+
+def multiplicative_calc(current_value, item_value):
+    if current_value == 0:
+        return round(1 - (item_value / 100), 4)
+    else:
+        return round(1 - (current_value * (item_value / 100)), 4)

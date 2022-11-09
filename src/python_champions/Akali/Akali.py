@@ -8,7 +8,7 @@ class Akali(Champion):
         super().__init__(champ_dict)
         self.has_assassins_mark = False
         self.enemy_max_hp = enemy_max_hp
-        self.ability_power_flat = 50
+        self.total_ability_power_flat = 50
 
     def auto_attack(self):
         if self.has_assassins_mark:
@@ -19,7 +19,7 @@ class Akali(Champion):
 
     def passive_ability(self):
         attack_damage_amp = self.bonus_attack_damage * 0.6
-        ability_power_amp = self.ability_power_flat * 0.55
+        ability_power_amp = self.total_ability_power_flat * 0.55
         passive_damage = 35
 
         for i in range(2, 19):

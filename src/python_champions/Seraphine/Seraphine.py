@@ -14,7 +14,7 @@ class Seraphine(Champion):
         self.echo = 0
         self.note_stacks = 0
         self.enemy_max_hp = enemy_max_hp
-        self.ability_power_flat = 30  # just for testing not for final
+        self.total_ability_power_flat = 30  # just for testing not for final
 
         # self.is_echo = False
 
@@ -36,7 +36,7 @@ class Seraphine(Champion):
         damage_type = self.passive_ability_dict["damage_type"]
         damage = []
 
-        ap_amplifier_based_on_ability_scaling = self.ability_power_flat * 0.07
+        ap_amplifier_based_on_ability_scaling = self.total_ability_power_flat * 0.07
 
         if self.note_stacks > 4:
             self.note_stacks = 4

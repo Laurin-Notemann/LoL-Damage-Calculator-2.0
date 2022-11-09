@@ -34,3 +34,18 @@ b = type(x)
 
 print(b)
 
+
+class test:
+    pass
+
+
+test1 = test()
+
+item_dict = {
+    "item1": test1,
+    "item2": "",
+    "item3": "",
+    "item4": "",
+    "item5": "",
+    "item6": ""
+}
