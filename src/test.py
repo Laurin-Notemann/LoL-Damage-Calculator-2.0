@@ -1,3 +1,9 @@
+from python_champions.Seraphine import Seraphine
+from python_champions.Ahri import Ahri
+from python_champions.get_dict import get_dict
+
+import jsonpickle
+"""
 ability_dict = {
     "Q": [
         {
@@ -48,4 +54,18 @@ item_dict = {
     "item4": "",
     "item5": "",
     "item6": ""
-}
+}"""
+
+sera = Seraphine.Seraphine(get_dict("Seraphine"), 1000)
+ahri = Ahri.Ahri(get_dict("Ahri"))
+
+print(ahri.total_attack_damage)
+print(ahri.auto_attack())
+print(sera.total_attack_damage)
+print(sera.q_ability(700, 0))
+print(sera.auto_attack())
+# print(sera.toJSON())
+jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)
+test = jsonpickle.encode(sera)
+
+# print(test)

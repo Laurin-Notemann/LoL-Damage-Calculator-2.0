@@ -1,5 +1,5 @@
-from src.python_champions.Champion import Champion
-from src.python_champions.get_dict import get_dict
+from python_champions.Champion import Champion
+from python_champions.get_dict import get_dict
 
 
 class Seraphine(Champion):
@@ -69,7 +69,7 @@ class Seraphine(Champion):
             damage_total_without_amp = self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")
             damage_total_with_amp = damage_total_without_amp[1] + (damage_total_without_amp[1] * damage_amplifier_missing_health)
 
-            return [damage_total_without_amp[1], damage_total_with_amp, None]
+            return [damage_total_without_amp[0], damage_total_with_amp, None]
 
     def w_ability(self, skill_level=-1):
         return None
@@ -91,10 +91,11 @@ class Seraphine(Champion):
 
 sera = Seraphine(get_dict("Seraphine"), 1000)
 # print(vars(sera))
-
+"""
 print(sera.q_ability(250, 3))
 print(sera.w_ability(2))
 print(sera.e_ability(2))
 print(sera.r_ability(2))
 print(sera.auto_attack())
 print(sera.passive_ability())
+"""
