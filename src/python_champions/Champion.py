@@ -16,7 +16,7 @@ class Champion:
         self.champion_attack_type = self.champ_dict["attackType"]
         self.champion_adaptive_type = self.champ_dict["adaptiveType"]
 
-        self.champion_level = 1 # level 1 is standard can be changed with set_champion_level
+        self.champion_level = 1  # level 1 is standard can be changed with set_champion_level
 
         self.base_health = self.stats["health"]["flat"]
         self.base_health_regen = self.stats["healthRegen"]["flat"]
@@ -25,7 +25,8 @@ class Champion:
         self.base_armor = self.stats["armor"]["flat"]
         self.base_magic_resistance = self.stats["magicResistance"]["flat"]
         self.base_attack_damage = self.stats["attackDamage"]["flat"]
-        self.base_attack_speed = self.stats["attackSpeed"]["flat"] # This is a percentage
+        # This is a percentage
+        self.base_attack_speed = self.stats["attackSpeed"]["flat"]
         self.base_movespeed = self.stats["movespeed"]["flat"]
 
         self.health_per_level = self.stats["health"]["perLevel"]
@@ -56,18 +57,20 @@ class Champion:
         self.bonus_armor = 0
         self.bonus_magic_resistance = 0
         self.bonus_attack_damage = 0
-        self.bonus_attack_speed = 0 
+        self.bonus_attack_speed = 0
 
         self.total_health_points = 0
         self.total_health_regen = 0
         self.total_mana = 0
         self.total_mana_regen = 0
         self.total_armor = 0
-        self.total_magic_resistance = 0
-        self.mythic_magic_pen_percentage = 0
-        self.mythic_tenacity = 0
-        self.mythic_slow_resistance = 0
         self.total_attack_damage = 0
+        self.total_attack_speed = 0
+        self.total_magic_resistance = 0
+        self.total_armor_pen_percentage = 0
+        self.total_magic_pen_percentage = 0
+        self.total_tenacity = 0
+        self.total_slow_resistance = 0
 
         self.total_critical_chance = 0
         self.total_lethality_flat = 0
@@ -79,105 +82,73 @@ class Champion:
         self.total_physical_vamp = 0
         self.total_omnivamp = 0
 
-        # following to method calls only for test purposes
+        self.item_dict = {
+            "item1": None,
+            "item2": None,
+            "item3": None,
+            "item4": None,
+            "item5": None,
+            "item6": None
+        }
+        self.has_mythic = False
+        self.number_of_legendary_items = 0
+        self.has_steraks_gage = False
+        self.has_rabadons_deathcap = False
+        self.has_titanic_hydra = False
+        self.has_demonic_embrace = False
+
+        self.mythic_armor_pen_perc = 0
+        self.mythic_magic_pen_perc = 0
+        self.mythic_tenacity = 0
+        self.mythic_slow_resistance = 0
+
+        # following two method calls only for test purposes
         self.set_base_stats_based_on_level()
         # self.set_total_value_to_based_on_level_and_item_stats()
 
-        self.passive_ability_dict = self.get_ability_values("P")["P"][0]
-        # self.q_ability_dict = self.get_ability_values("Q")["Q"][0]
-        # self.w_ability_dict = self.get_ability_values("W")["W"][0]
-        # self.e_ability_dict = self.get_ability_values("E")["E"][0]
-        # self.r_ability_dict = self.get_ability_values("R")["R"][0]
-
     def set_champion_level(self, current_level):
         self.champion_level = current_level
+
+    def set_items_for_champion(self, item_dict):
+        self.item_dict = item_dict
 
     def per_level_scaling(self, base_stat, growth_stat, round_by):
         return round(base_stat + growth_stat * (self.champion_level - 1) * (0.7025 + 0.0175 * (self.champion_level - 1)), round_by)
 
     def set_base_stats_based_on_level(self):
         self.health_points_based_on_level = self.per_level_scaling(
-            self.base_health, self.health_per_level, 2)
+            self.base_health, 
+            self.health_per_level, 2)
         self.health_points_regen_based_on_level = self.per_level_scaling(
-            self.base_health_regen, self.health_regen_per_level, 2)
+            self.base_health_regen, 
+            self.health_regen_per_level, 2)
         self.mana_based_on_level = self.per_level_scaling(
-            self.base_mana, self.mana_per_level, 2)
+            self.base_mana, 
+            self.mana_per_level, 2)
         self.mana_regen_based_on_level = self.per_level_scaling(
-            self.base_mana_regen, self.mana_regen_per_level, 2)
+            self.base_mana_regen, 
+            self.mana_regen_per_level, 2)
         self.armor_based_on_level = self.per_level_scaling(
-            self.base_armor, self.armor_per_level, 2)
+            self.base_armor, 
+            self.armor_per_level, 2)
         self.magic_resistance_based_on_level = self.per_level_scaling(
-            self.base_magic_resistance, self.magic_resistance_per_level, 2)
+            self.base_magic_resistance, 
+            self.magic_resistance_per_level, 2)
         self.attack_damage_based_on_level = self.per_level_scaling(
-            self.base_attack_damage, self.attack_damage_per_level, 2)
+            self.base_attack_damage, 
+            self.attack_damage_per_level, 2)
         self.bonus_attack_speed = self.per_level_scaling(
-            0, self.attack_speed_per_level / 100, 4)
+            0, 
+            self.attack_speed_per_level / 100, 4)
 
-    def set_total_value_to_based_on_level_and_item_stats(self, item_dict: dict):
-        """
-        only for test purposes, champion uses total attack damage for auto attacks, which depend on item, but items not yet done
-        :return:
-        """
-        # First we set all the bonus stats
-
-        for i in range(1, 7):
-            if item_dict[f"item{i}"] != "":
-                curr_item = item_dict[f"item{i}"]
-
-                self.bonus_health_points += curr_item.item_health_flat
-                self.bonus_mana += curr_item.item_mana_flat
-                self.bonus_armor += curr_item.item_armor_flat
-                self.bonus_magic_resistance += curr_item.item_magic_resistance_flat
-                self.bonus_attack_damage += curr_item.item_attack_damage_flat
-                self.bonus_attack_speed += curr_item.item_attack_speed_flat
-
-                self.total_critical_chance += curr_item.item_critical_strike_chance_percentage
-                self.total_lethality_flat += curr_item.item_lethality_flat
-                self.total_magic_pen_flat += curr_item.item_magic_penetration_flat
-                self.total_ability_power_flat += curr_item.item_ability_power_flat
-                self.total_ability_haste += curr_item.item_ability_haste_flat
-                self.total_heal_and_shield_power += curr_item.item_heal_and_shield_power_flat
-                self.total_life_steal += curr_item.item_lifesteal_percentage
-                self.total_physical_vamp += curr_item.item_physical_vamp
-                self.total_omnivamp += curr_item.item_omnivamp_percentage
-
-                self.total_armor_pen_percentage = multiplicative_calc(
-                    self.total_armor_pen_percentage,
-                    curr_item.item_armor_penetration_percentage
-                )
-                self.total_magic_pen_percentage = multiplicative_calc(
-                    self.total_magic_pen_percentage,
-                    curr_item.item_magic_penetration_percentage
-                )
-                self.total_tenacity = multiplicative_calc(
-                    self.total_tenacity, 
-                    curr_item.item_tenacity_flat
-                )
-                self.total_slow_resistance = multiplicative_calc(
-                    self.total_slow_resistance, 
-                    curr_item.item_slow_resistance_flat
-                )
-
-                if curr_item.item_health_regen_flat > 0:
-                    self.total_health_regen += self.base_health_regen * \
-                        curr_item.item_health_regen_flat
-                if curr_item.item_mana_regen_flat > 0:
-                    self.total_mana_regen += self.base_mana_regen * curr_item.item_mana_regen_flat
+    def set_total_value_to_based_on_level_and_item_stats(self):
+        # First we add all the stats from the items that are chosen
+        self.add_item_stats()
+        self.add_mythic_stats()
+        self.add_special_item_stats()
 
         #  Then we calculate the total damage based on the base stats and the bonus stats
-        self.total_attack_damage = self.attack_damage_based_on_level + self.bonus_attack_damage
-        self.total_health_points = self.health_points_based_on_level + self.bonus_health_points
-        self.total_mana = self.mana_based_on_level + self.bonus_mana
-        self.total_armor = self.armor_based_on_level + self.bonus_armor
-        self.total_magic_resistance = self.magic_resistance_based_on_level + \
-            self.bonus_magic_resistance
-
-        self.total_armor_pen_percentage = round(
-            1 - self.total_armor_pen_percentage, 4)
-        self.total_magic_pen_percentage = round(
-            1 - self.total_magic_pen_percentage, 4)
-        self.total_tenacity = round(1 - self.total_tenacity, 4)
-        self.total_slow_resistance = round(1 - self.total_slow_resistance, 4)
+        self.set_total_stats()
 
     def auto_attack(self):
         return ["PHYSICAL_DAMAGE", self.total_attack_damage, None]
@@ -320,12 +291,140 @@ class Champion:
 
         return ability_attribute_modifier_value
 
-    def set_champion_level(self, level):
-        self.champion_level = level
+    def add_item_stats(self):
+        for i in range(1, 7):
+            curr_item = self.item_dict[f"item{i}"]
+            if curr_item != "":
+
+                if curr_item.is_legendary:
+                    self.number_of_legendary_items += 1
+                if curr_item.is_mythic:
+                    self.has_mythic = True
+                if curr_item.item_id == 3053:
+                    self.has_steraks_gage = True
+                if curr_item.item_id == 3089:
+                    self.has_rabadons_deathcap == True
+                if curr_item.item_id == 3748:
+                    self.has_titanic_hydra = True
+                if curr_item.item_id == 4637:
+                    self.has_demonic_embrace = True
+
+                self.bonus_health_points += curr_item.item_health_flat
+                self.bonus_mana += curr_item.item_mana_flat
+                self.bonus_armor += curr_item.item_armor_flat
+                self.bonus_magic_resistance += curr_item.item_magic_resistance_flat
+                self.bonus_attack_damage += curr_item.item_attack_damage_flat
+                self.bonus_attack_speed += curr_item.item_attack_speed_flat
+
+                self.total_critical_chance += curr_item.item_critical_strike_chance_percentage
+                self.total_lethality_flat += curr_item.item_lethality_flat
+                self.total_magic_pen_flat += curr_item.item_magic_penetration_flat
+                self.total_ability_power_flat += curr_item.item_ability_power_flat
+                self.total_ability_haste += curr_item.item_ability_haste_flat
+                self.total_heal_and_shield_power += curr_item.item_heal_and_shield_power_flat
+                self.total_life_steal += curr_item.item_lifesteal_percentage
+                self.total_physical_vamp += curr_item.item_physical_vamp
+                self.total_omnivamp += curr_item.item_omnivamp_percentage
+
+                self.total_armor_pen_percentage = multiplicative_calc(
+                    self.total_armor_pen_percentage,
+                    curr_item.item_armor_penetration_percentage
+                )
+                self.total_magic_pen_percentage = multiplicative_calc(
+                    self.total_magic_pen_percentage,
+                    curr_item.item_magic_penetration_percentage
+                )
+                self.total_tenacity = multiplicative_calc(
+                    self.total_tenacity,
+                    curr_item.item_tenacity_flat
+                )
+                self.total_slow_resistance = multiplicative_calc(
+                    self.total_slow_resistance,
+                    curr_item.item_slow_resistance_flat
+                )
+
+                if curr_item.item_health_regen_flat > 0:
+                    self.total_health_regen += self.base_health_regen * \
+                        curr_item.item_health_regen_flat
+                if curr_item.item_mana_regen_flat > 0:
+                    self.total_mana_regen += self.base_mana_regen * curr_item.item_mana_regen_flat
+
+    def add_mythic_stats(self):
+        if self.has_mythic:
+            curr_item = self.item_dict[f"item{i}"]
+            for i in range(self.number_of_legendary_items):
+                self.bonus_health_points += curr_item.mythic_health_flat
+                self.bonus_armor += curr_item.mythic_armor_flat
+                self.bonus_magic_resistance += curr_item.mythic_magic_resistance_flat
+                self.bonus_attack_damage += curr_item.mythic_attack_damage_flat
+                self.bonus_attack_speed += curr_item.mythic_attack_speed_flat
+
+                self.total_lethality_flat += curr_item.mythic_lethality_flat
+                self.total_magic_pen_flat += curr_item.mythic_magic_penetration_flat
+                self.total_ability_power_flat += curr_item.mythic_ability_power_flat
+                self.total_ability_haste += curr_item.mythic_ability_haste_flat
+                self.total_heal_and_shield_power += curr_item.mythic_heal_and_shield_power_flat
+                self.total_omnivamp += curr_item.mythic_omnivamp_flat_percentage
+
+                self.mythic_armor_pen_perc += curr_item.mythic_armor_penetration_percentage
+                self.mythic_magic_pen_perc += curr_item.mythic_magic_penetration_percentage
+                self.mythic_tenacity += curr_item.mythic_tenacity_flat
+                self.mythic_slow_resistance += curr_item.mythic_slow_resistance
+
+        self.total_armor_pen_percentage = multiplicative_calc(
+            self.total_armor_pen_percentage,
+            self.mythic_armor_pen_perc
+        )
+        self.total_magic_pen_percentage = multiplicative_calc(
+            self.total_magic_pen_percentage,
+            self.mythic_magic_pen_perc
+        )
+        self.total_tenacity = multiplicative_calc(
+            self.total_tenacity,
+            self.mythic_tenacity
+        )
+        self.total_slow_resistance = multiplicative_calc(
+            self.total_slow_resistance,
+            self.mythic_slow_resistance
+        )
+
+    def add_special_item_stats(self):
+        if self.has_steraks_gage:
+            self.bonus_attack_damage += round(0.45 *
+                                              self.attack_damage_based_on_level, 4)
+        if self.has_rabadons_deathcap:
+            self.total_ability_power_flat *= 1.35
+        if self.has_titanic_hydra:
+            self.bonus_attack_damage += round(0.02 *
+                                              self.bonus_health_points, 4)
+        if self.has_demonic_embrace:
+            self.total_ability_power_flat += round(
+                0.02 * self.bonus_health_points, 4)
+
+    def set_total_stats(self):
+        self.total_health_points = self.health_points_based_on_level + self.bonus_health_points
+        self.total_mana = self.mana_based_on_level + self.bonus_mana
+        self.total_armor = self.armor_based_on_level + self.bonus_armor
+        self.total_magic_resistance = self.magic_resistance_based_on_level + \
+            self.bonus_magic_resistance
+        self.total_attack_damage = self.attack_damage_based_on_level + self.bonus_attack_damage
+
+        self.total_attack_speed = round(
+            self.base_attack_speed + (self.attack_speed_ratio * self.bonus_attack_speed), 2)
+
+        self.total_armor_pen_percentage = round(
+            1 - self.total_armor_pen_percentage, 4)
+        self.total_magic_pen_percentage = round(
+            1 - self.total_magic_pen_percentage, 4)
+        self.total_tenacity = round(1 - self.total_tenacity, 4)
+        self.total_slow_resistance = round(1 - self.total_slow_resistance, 4)
+
+        self.total_critical_chance = round(self.total_critical_chance, 4)
 
     def __getstate__(self):
         state = self.__dict__.copy()
         del state["champ_dict"]
+        del state["stats"]
         return state
 
     def __setstate__(self, state):

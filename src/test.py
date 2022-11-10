@@ -55,7 +55,7 @@ item_dict = {
     "item5": "",
     "item6": ""
 }"""
-
+"""
 sera = Seraphine.Seraphine(get_dict("Seraphine"), 1000)
 ahri = Ahri.Ahri(get_dict("Ahri"))
 
@@ -69,3 +69,4 @@ jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)
 test = jsonpickle.encode(sera)
 
 # print(test)
+"""

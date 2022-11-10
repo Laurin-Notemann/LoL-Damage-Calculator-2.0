@@ -11,6 +11,7 @@ class Item:
 
         self.item_tier = self.item_dict["tier"]
         self.is_legendary = False # default False, will be changed to True inside the respctive item if it is a legendary item
+        self.is_mythic = False # default False, will be changed to True inside the respctive item if it is a mythic item
 
         self.item_builds_from = self.item_dict["buildsFrom"]
         self.item_builds_into = self.item_dict["buildsInto"]
@@ -59,11 +60,13 @@ class Item:
         self.mythic_magic_penetration_flat = 0
         self.mythic_magic_penetration_percentage = 0
         self.mythic_magic_resistance_flat = 0
-        self.mythic_movespeed_flat = 0
-        self.mythic_movespeed_perc = 0
+        # Movespeed for now irrelevant just a difficult calc for no reason lol
+        # self.mythic_movespeed_flat = 0 
+        # self.mythic_movespeed_perc = 0
         self.mythic_ability_haste_flat = 0
         self.mythic_omnivamp_flat_percentage = 0
         self.mythic_tenacity_flat = 0
+        self.mythic_slow_resistance = 0 # this has to be defined in the corresponing item (sunfire aegis)
 
         # Mythic item stats
         if self.item_no_effects == False and not self.item_passives:
@@ -81,8 +84,8 @@ class Item:
                     self.mythic_magic_penetration_flat = stats["magicPenetration"]["flat"]
                     self.mythic_magic_penetration_percentage = stats["magicPenetration"]["percent"]
                     self.mythic_magic_resistance_flat = stats["magicResistance"]["flat"]
-                    self.mythic_movespeed_flat = stats["movespeed"]["flat"]
-                    self.mythic_movespeed_perc = stats["movespeed"]["percent"]
+                    # self.mythic_movespeed_flat = stats["movespeed"]["flat"]
+                    # self.mythic_movespeed_perc = stats["movespeed"]["percent"]
                     self.mythic_ability_haste_flat = stats["abilityHaste"]["flat"]
                     self.mythic_omnivamp_flat_percentage = stats["omnivamp"]["percent"]
                     self.mythic_tenacity_flat = stats["omnivamp"]["flat"]

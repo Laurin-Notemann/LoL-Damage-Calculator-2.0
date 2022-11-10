@@ -16,7 +16,7 @@ class Aatrox(Champion):
             return ["PHYSICAL_DAMAGE", self.total_attack_damage, None]
 
     def passive_ability(self):
-        damage_type = self.passive_ability_dict["damage_type"]
+        damage_type = "PHYSICAL_DAMAGE"
 
         perc_amp = 0.0459
 

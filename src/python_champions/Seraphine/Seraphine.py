@@ -33,7 +33,7 @@ class Seraphine(Champion):
 
     # returns value of the additional damage (only works for the notes she creates by herself so max is 4 currently)
     def passive_ability(self):
-        damage_type = self.passive_ability_dict["damage_type"]
+        damage_type = "MAGIC_DAMAGE"
         damage = []
 
         ap_amplifier_based_on_ability_scaling = self.total_ability_power_flat * 0.07
