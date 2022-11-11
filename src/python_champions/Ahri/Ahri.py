@@ -1,5 +1,5 @@
 from python_champions.Champion import Champion
-from python_champions.get_dict import get_dict
+from python_champions.get_dict import get_dict_champ
 
 
 class Ahri(Champion):

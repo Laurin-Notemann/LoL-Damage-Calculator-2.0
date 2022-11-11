@@ -3,8 +3,12 @@ import json
 from python_champions.Champion import Champion
 
 
-def get_dict(champion_name: str):
-    with open(f"{champion_name}.json", "r") as read_file:
+def get_dict_champ(champion_name: str):
+    with open(f"current_champions_json/{champion_name}.json", "r") as read_file:
+        return json.load(read_file)
+
+def get_dict_item(champion_name: str):
+    with open(f"current_items_json/{champion_name}.json", "r") as read_file:
         return json.load(read_file)
 
 

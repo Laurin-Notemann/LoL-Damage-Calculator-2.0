@@ -1,5 +1,5 @@
 from src.python_champions.Champion import Champion
-from src.python_champions.get_dict import get_dict
+from src.python_champions.get_dict import get_dict_champ
 
 
 class Aatrox(Champion):
