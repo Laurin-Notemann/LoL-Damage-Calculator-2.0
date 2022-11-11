@@ -103,11 +103,12 @@ class Champion:
         self.mythic_slow_resistance = 0
 
         # following two method calls only for test purposes
-        self.set_base_stats_based_on_level()
+        
         # self.set_total_value_to_based_on_level_and_item_stats()
 
     def set_champion_level(self, current_level):
         self.champion_level = current_level
+        self.set_base_stats_based_on_level()
 
     def set_items_for_champion(self, item_dict):
         self.item_dict = item_dict
@@ -191,16 +192,6 @@ class Champion:
 
     def get_dmg_based_on_flat_and_percentage_values(self, key, skill_level, effect_number, attribute_number, scaling_param: str,
                                                     scaling_param_two: str = ""):
-        """
-
-        :param scaling_param_two:
-        :param scaling_param:
-        :param attribute_number:
-        :param effect_number:
-        :param key:
-        :param skill_level:
-        :return:
-        """
         scaling_value_one = 0
         scaling_value_two = 0
         if scaling_param == "AD":
@@ -241,13 +232,6 @@ class Champion:
         Third Parameter in the return call is None because when to make the array that contains the damage numbers consistent, reason being if the
         dmg is mixed (e.g. Physical and Magical) then you get three parameters, first one states the type of dmg, and the other to each instance of
         the mixed dmg.
-        :param scaling_param_two:
-        :param key:
-        :param skill_level:
-        :param effect_number:
-        :param attribute_number:
-        :param scaling_param:
-        :return:
         """
         damage_total_without_amp = self.get_dmg_based_on_flat_and_percentage_values(key, skill_level, effect_number, attribute_number,
                                                                                     scaling_param, scaling_param_two)
@@ -351,8 +335,9 @@ class Champion:
 
     def add_mythic_stats(self):
         if self.has_mythic:
-            curr_item = self.item_dict[f"item{i}"]
             for i in range(self.number_of_legendary_items):
+                curr_item = self.item_dict[f"item{i}"]
+
                 self.bonus_health_points += curr_item.mythic_health_flat
                 self.bonus_armor += curr_item.mythic_armor_flat
                 self.bonus_magic_resistance += curr_item.mythic_magic_resistance_flat
@@ -425,6 +410,7 @@ class Champion:
         state = self.__dict__.copy()
         del state["champ_dict"]
         del state["stats"]
+        del state["item_dict"]
         return state
 
     def __setstate__(self, state):

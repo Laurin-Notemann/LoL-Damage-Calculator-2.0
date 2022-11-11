@@ -1,5 +1,5 @@
-from src.python_champions.get_dict import get_dict
-from src.python_items.Item import Item
+from python_champions.get_dict import get_dict
+from python_items.Item import Item
 
 
 class LiandrysAnguish(Item):
@@ -19,7 +19,8 @@ class LiandrysAnguish(Item):
 
         return [damage_type, damage, None]
 
-
+"""
 liandrys = LiandrysAnguish(get_dict("6653"))
 
 print(liandrys.item_passives_dmg("AP", 1000, 4, 5000))
+"""

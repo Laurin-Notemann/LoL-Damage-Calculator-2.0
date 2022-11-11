@@ -89,7 +89,7 @@ class Seraphine(Champion):
             return self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")
 
 
-sera = Seraphine(get_dict("Seraphine"), 1000)
+# sera = Seraphine(get_dict("Seraphine"), 1000)
 # print(vars(sera))
 """
 print(sera.q_ability(250, 3))

@@ -53,7 +53,7 @@ class Aatrox(Champion):
             self.bonus_attack_damage += self.total_attack_damage * (1 + (ability_value_dict["effect2"]["attribute0"][0][0][skill_level] / 100))
             self.set_base_stats_based_on_level()  # needs to be called everytime bonus AD changes
 
-
+"""
 aatrox = Aatrox(get_dict("Aatrox"), 1000)
 
 # print(aatrox.r_ability(0))
@@ -61,3 +61,4 @@ print(aatrox.auto_attack())
 print(aatrox.passive_ability())
 print(aatrox.q_ability(1, False))
 print(aatrox.w_ability(2, False))
+"""

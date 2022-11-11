@@ -1,4 +1,4 @@
-import json
+import jsonpickle
 
 
 class Item:
@@ -96,5 +96,13 @@ class Item:
     def item_passives_dmg(self, champions_scaling_param: str = "", champion_scaling_value=0):
         pass
 
-    def get_stats_from_json(self):
-        pass
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state["item_dict"]
+        del state["stats"]
+        del state["item_passives"]
+        del state["item_actives"]
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)

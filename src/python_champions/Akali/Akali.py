@@ -73,7 +73,7 @@ class Akali(Champion):
             elif second_instance:
                 return damage_second_r
 
-
+"""
 akali = Akali(get_dict("Akali"), 1000)
 print(akali.auto_attack())
 print(akali.q_ability(1))
@@ -82,3 +82,4 @@ print(akali.auto_attack())
 print(akali.e_ability(1))
 print(akali.r_ability(1, 700))
 print(akali.auto_attack())
+"""

@@ -1,5 +1,6 @@
-from python_champions.Seraphine import Seraphine
-from python_champions.Ahri import Ahri
+from python_champions.Seraphine.Seraphine import Seraphine
+from python_champions.Ahri.Ahri import Ahri
+from python_items.LudensTempest.LudensTempest import LudensTempest
 from python_champions.get_dict import get_dict
 
 import jsonpickle
@@ -47,26 +48,40 @@ class test:
 
 test1 = test()
 
-item_dict = {
-    "item1": test1,
+
+}"""
+
+
+
+sera = Seraphine(get_dict("Seraphine"), 1000)
+ahri = Ahri(get_dict("Ahri"))
+
+ludens = LudensTempest(get_dict("6655"))
+
+item_dict_for_champ = {
+    "item1": ludens,
     "item2": "",
     "item3": "",
     "item4": "",
     "item5": "",
     "item6": ""
-}"""
-"""
-sera = Seraphine.Seraphine(get_dict("Seraphine"), 1000)
-ahri = Ahri.Ahri(get_dict("Ahri"))
+}
 
-print(ahri.total_attack_damage)
-print(ahri.auto_attack())
-print(sera.total_attack_damage)
-print(sera.q_ability(700, 0))
-print(sera.auto_attack())
+sera.set_items_for_champion(item_dict_for_champ)
+
+print(sera.item_dict)
+
+sera.set_base_stats_based_on_level()
+sera.set_total_value_to_based_on_level_and_item_stats()
+
+
+# print(ahri.total_attack_damage)
+# print(ahri.auto_attack())
+# print(sera.total_attack_damage)
+# print(sera.q_ability(700, 0))
+# print(sera.auto_attack())
 # print(sera.toJSON())
-jsonpickle.set_encoder_options('json', sort_keys=True, indent=4)
+jsonpickle.set_encoder_options('json', indent=4)
 test = jsonpickle.encode(sera)
 
-# print(test)
-"""
+print(test)
