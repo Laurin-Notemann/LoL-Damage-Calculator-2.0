@@ -8,6 +8,7 @@ class Item:
 
         self.item_id = self.item_dict["id"]
         self.item_name = self.item_dict["name"]
+        self.item_icon = self.item_dict["icon"]
 
         self.item_tier = self.item_dict["tier"]
         self.is_legendary = False # default False, will be changed to True inside the respctive item if it is a legendary item

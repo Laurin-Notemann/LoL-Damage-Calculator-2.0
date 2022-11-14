@@ -82,6 +82,6 @@ sera.set_total_value_to_based_on_level_and_item_stats()
 # print(sera.auto_attack())
 # print(sera.toJSON())
 jsonpickle.set_encoder_options('json', indent=4)
-test = jsonpickle.encode(sera)
+test = jsonpickle.encode(sera, unpicklable=False)
 
 print(test)
