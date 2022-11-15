@@ -8,7 +8,7 @@ class Akali(Champion):
         super().__init__(champ_dict)
         self.has_assassins_mark = False
         self.enemy_max_hp = enemy_max_hp
-        self.total_ability_power_flat = 50
+        #  self.total_ability_power_flat = 50
 
     def auto_attack(self):
         if self.has_assassins_mark:
@@ -72,6 +72,18 @@ class Akali(Champion):
                 return damage_first_r
             elif second_instance:
                 return damage_second_r
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state["champ_dict"]
+        del state["stats"]
+        del state["item_dict"]
+        del state["has_assassins_mark"]
+        del state["enemy_max_hp"]
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
 
 """
 akali = Akali(get_dict("Akali"), 1000)

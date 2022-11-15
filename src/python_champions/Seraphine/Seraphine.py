@@ -1,5 +1,7 @@
-from python_champions.Champion import Champion
-from python_champions.get_dict import get_dict_champ
+import jsonpickle
+
+from src.python_champions.Champion import Champion
+from src.python_champions.get_dict import get_dict_champ
 
 
 class Seraphine(Champion):
@@ -14,7 +16,7 @@ class Seraphine(Champion):
         self.echo = 0
         self.note_stacks = 0
         self.enemy_max_hp = enemy_max_hp
-        self.total_ability_power_flat = 30  # just for testing not for final
+        # self.total_ability_power_flat = 30  # just for testing not for final
 
         # self.is_echo = False
 
@@ -87,6 +89,19 @@ class Seraphine(Champion):
         if skill_level > -1:
             self.note_stacks += 1
             return self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")
+
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state["champ_dict"]
+        del state["stats"]
+        del state["item_dict"]
+        del state["echo"]
+        del state["note_stacks"]
+        del state["enemy_max_hp"]
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
 
 
 # sera = Seraphine(get_dict("Seraphine"), 1000)

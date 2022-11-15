@@ -10,77 +10,76 @@ class Champion:
 
         self.champion_id = self.champ_dict["id"]
         self.champion_name = self.champ_dict["name"]
-        self.champion_icon = self.champ_dict["icon"]
-
+        self.champion_icon = "https://" + self.champ_dict["icon"][7:]
         self.champion_resource = self.champ_dict["resource"]
         self.champion_attack_type = self.champ_dict["attackType"]
         self.champion_adaptive_type = self.champ_dict["adaptiveType"]
 
         self.champion_level = 1  # level 1 is standard can be changed with set_champion_level
 
-        self.base_health = self.stats["health"]["flat"]
-        self.base_health_regen = self.stats["healthRegen"]["flat"]
-        self.base_mana = self.stats["mana"]["flat"]
-        self.base_mana_regen = self.stats["manaRegen"]["flat"]
-        self.base_armor = self.stats["armor"]["flat"]
-        self.base_magic_resistance = self.stats["magicResistance"]["flat"]
-        self.base_attack_damage = self.stats["attackDamage"]["flat"]
+        self.base_health = self.stats["health"]["flat"] * 1.0
+        self.base_health_regen = self.stats["healthRegen"]["flat"] * 1.0
+        self.base_mana = self.stats["mana"]["flat"] * 1.0
+        self.base_mana_regen = self.stats["manaRegen"]["flat"] * 1.0
+        self.base_armor = self.stats["armor"]["flat"] * 1.0
+        self.base_magic_resistance = self.stats["magicResistance"]["flat"] * 1.0
+        self.base_attack_damage = self.stats["attackDamage"]["flat"] * 1.0
         # This is a percentage
-        self.base_attack_speed = self.stats["attackSpeed"]["flat"]
-        self.base_movespeed = self.stats["movespeed"]["flat"]
+        self.base_attack_speed = self.stats["attackSpeed"]["flat"] * 1.0
+        self.base_movespeed = self.stats["movespeed"]["flat"] * 1.0
 
-        self.health_per_level = self.stats["health"]["perLevel"]
-        self.health_regen_per_level = self.stats["healthRegen"]["perLevel"]
-        self.mana_per_level = self.stats["mana"]["perLevel"]
-        self.mana_regen_per_level = self.stats["manaRegen"]["perLevel"]
-        self.armor_per_level = self.stats["armor"]["perLevel"]
-        self.magic_resistance_per_level = self.stats["magicResistance"]["perLevel"]
-        self.attack_damage_per_level = self.stats["attackDamage"]["perLevel"]
-        self.attack_speed_per_level = self.stats["attackSpeed"]["perLevel"]
+        self.health_per_level = self.stats["health"]["perLevel"] * 1.0
+        self.health_regen_per_level = self.stats["healthRegen"]["perLevel"] * 1.0
+        self.mana_per_level = self.stats["mana"]["perLevel"] * 1.0
+        self.mana_regen_per_level = self.stats["manaRegen"]["perLevel"] * 1.0
+        self.armor_per_level = self.stats["armor"]["perLevel"] * 1.0
+        self.magic_resistance_per_level = self.stats["magicResistance"]["perLevel"] * 1.0
+        self.attack_damage_per_level = self.stats["attackDamage"]["perLevel"] * 1.0
+        self.attack_speed_per_level = self.stats["attackSpeed"]["perLevel"] * 1.0
 
         # self.champ_dict["stats"]["criticalStrikeDamage"]["flat"] not correct in the jsons
-        self.critical_strike_damage = 175
-        self.critical_strike_damage_modifier = self.stats["criticalStrikeDamageModifier"]["flat"]
-        self.attack_speed_ratio = self.stats["attackSpeedRatio"]["flat"]
+        self.critical_strike_damage = 175.0
+        self.critical_strike_damage_modifier = self.stats["criticalStrikeDamageModifier"]["flat"] * 1.0
+        self.attack_speed_ratio = self.stats["attackSpeedRatio"]["flat"] * 1.0
         self.gold_per_10 = 20.4
 
-        self.health_points_based_on_level = 0
-        self.health_points_regen_based_on_level = 0
-        self.mana_based_on_level = 0
-        self.mana_regen_based_on_level = 0
-        self.armor_based_on_level = 0
-        self.magic_resistance_based_on_level = 0
-        self.attack_damage_based_on_level = 0
+        self.health_points_based_on_level = 0.0
+        self.health_points_regen_based_on_level = 0.0
+        self.mana_based_on_level = 0.0
+        self.mana_regen_based_on_level = 0.0
+        self.armor_based_on_level = 0.0
+        self.magic_resistance_based_on_level = 0.0
+        self.attack_damage_based_on_level = 0.0
 
-        self.bonus_health_points = 0
-        self.bonus_mana = 0
-        self.bonus_armor = 0
-        self.bonus_magic_resistance = 0
-        self.bonus_attack_damage = 0
-        self.bonus_attack_speed = 0
+        self.bonus_health_points = 0.0
+        self.bonus_mana = 0.0
+        self.bonus_armor = 0.0
+        self.bonus_magic_resistance = 0.0
+        self.bonus_attack_damage = 0.0
+        self.bonus_attack_speed = 0.0
 
-        self.total_health_points = 0
-        self.total_health_regen = 0
-        self.total_mana = 0
-        self.total_mana_regen = 0
-        self.total_armor = 0
-        self.total_attack_damage = 0
-        self.total_attack_speed = 0
-        self.total_magic_resistance = 0
-        self.total_armor_pen_percentage = 0
-        self.total_magic_pen_percentage = 0
-        self.total_tenacity = 0
-        self.total_slow_resistance = 0
+        self.total_health_points = 0.0
+        self.total_health_regen = 0.0
+        self.total_mana = 0.0
+        self.total_mana_regen = 0.0
+        self.total_armor = 0.0
+        self.total_attack_damage = 0.0
+        self.total_attack_speed = 0.0
+        self.total_magic_resistance = 0.0
+        self.total_armor_pen_percentage = 0.0
+        self.total_magic_pen_percentage = 0.0
+        self.total_tenacity = 0.0
+        self.total_slow_resistance = 0.0
 
-        self.total_critical_chance = 0
-        self.total_lethality_flat = 0
-        self.total_magic_pen_flat = 0
-        self.total_ability_power_flat = 0
-        self.total_ability_haste = 0
-        self.total_heal_and_shield_power = 0
-        self.total_life_steal = 0
-        self.total_physical_vamp = 0
-        self.total_omnivamp = 0
+        self.total_critical_chance = 0.0
+        self.total_lethality_flat = 0.0
+        self.total_magic_pen_flat = 0.0
+        self.total_ability_power_flat = 0.0
+        self.total_ability_haste = 0.0
+        self.total_heal_and_shield_power = 0.0
+        self.total_life_steal = 0.0
+        self.total_physical_vamp = 0.0
+        self.total_omnivamp = 0.0
 
         self.item_dict = {
             "item1": None,
@@ -91,19 +90,19 @@ class Champion:
             "item6": None
         }
         self.has_mythic = False
-        self.number_of_legendary_items = 0
+        self.number_of_legendary_items = 0.0
         self.has_steraks_gage = False
         self.has_rabadons_deathcap = False
         self.has_titanic_hydra = False
         self.has_demonic_embrace = False
 
-        self.mythic_armor_pen_perc = 0
-        self.mythic_magic_pen_perc = 0
-        self.mythic_tenacity = 0
-        self.mythic_slow_resistance = 0
+        self.mythic_armor_pen_perc = 0.0
+        self.mythic_magic_pen_perc = 0.0
+        self.mythic_tenacity = 0.0
+        self.mythic_slow_resistance = 0.0
 
         # following two method calls only for test purposes
-        
+
         # self.set_total_value_to_based_on_level_and_item_stats()
 
     def set_champion_level(self, current_level):
@@ -118,28 +117,28 @@ class Champion:
 
     def set_base_stats_based_on_level(self):
         self.health_points_based_on_level = self.per_level_scaling(
-            self.base_health, 
+            self.base_health,
             self.health_per_level, 2)
         self.health_points_regen_based_on_level = self.per_level_scaling(
-            self.base_health_regen, 
+            self.base_health_regen,
             self.health_regen_per_level, 2)
         self.mana_based_on_level = self.per_level_scaling(
-            self.base_mana, 
+            self.base_mana,
             self.mana_per_level, 2)
         self.mana_regen_based_on_level = self.per_level_scaling(
-            self.base_mana_regen, 
+            self.base_mana_regen,
             self.mana_regen_per_level, 2)
         self.armor_based_on_level = self.per_level_scaling(
-            self.base_armor, 
+            self.base_armor,
             self.armor_per_level, 2)
         self.magic_resistance_based_on_level = self.per_level_scaling(
-            self.base_magic_resistance, 
+            self.base_magic_resistance,
             self.magic_resistance_per_level, 2)
         self.attack_damage_based_on_level = self.per_level_scaling(
-            self.base_attack_damage, 
+            self.base_attack_damage,
             self.attack_damage_per_level, 2)
         self.bonus_attack_speed = self.per_level_scaling(
-            0, 
+            0,
             self.attack_speed_per_level / 100, 4)
 
     def set_total_value_to_based_on_level_and_item_stats(self):

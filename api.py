@@ -1,25 +1,34 @@
 from flask import Flask
 from flask_restful import Api, Resource
+import jsonpickle
 from src.python_champions.Aatrox import Aatrox
 from src.python_champions.Ahri import Ahri
 from src.python_champions.Akali import Akali
 from src.python_champions.Seraphine import Seraphine
-from src.python_champions.get_dict import get_dict
+from src.python_champions.get_dict import get_dict_champ
+from src.python_champions.get_dict import get_dict_item
 
 
-aatrox = Aatrox.Aatrox(get_dict("Aatrox"), 1000)
-ahri = Ahri.Ahri(get_dict("Ahri"))
-akali = Akali.Akali(get_dict("Akali"), 1000)
-seraphine = Seraphine.Seraphine(get_dict("Seraphine"), 1000)
+aatrox = jsonpickle.encode(Aatrox.Aatrox(get_dict_champ("Aatrox"), 1000), unpicklable=False)
+ahri = jsonpickle.encode(Ahri.Ahri(get_dict_champ("Ahri")), unpicklable=False)
+akali = jsonpickle.encode(Akali.Akali(get_dict_champ("Akali"), 1000), unpicklable=False)
+seraphine = jsonpickle.encode(Seraphine.Seraphine(get_dict_champ("Seraphine"), 1000), unpicklable=False)
+
+
+aatrox = jsonpickle.decode(aatrox)
+ahri = jsonpickle.decode(ahri)
+akali = jsonpickle.decode(akali)
+seraphine = jsonpickle.decode(seraphine)
 
 
 app = Flask(__name__)
 api = Api(app)
 
+test = {"champion_id": 1}
 
 class DamageData(Resource):
     def get(self):
-        return {"names": [aatrox.champion_name, ahri.champion_name, akali.champion_name, seraphine.champion_name]}
+        return {"listOfChampions": [aatrox, ahri, akali, seraphine]}
     
 
 

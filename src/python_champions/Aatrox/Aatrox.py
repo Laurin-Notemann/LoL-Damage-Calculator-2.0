@@ -53,6 +53,18 @@ class Aatrox(Champion):
             self.bonus_attack_damage += self.total_attack_damage * (1 + (ability_value_dict["effect2"]["attribute0"][0][0][skill_level] / 100))
             self.set_base_stats_based_on_level()  # needs to be called everytime bonus AD changes
 
+    def __getstate__(self):
+        state = self.__dict__.copy()
+        del state["champ_dict"]
+        del state["stats"]
+        del state["item_dict"]
+        del state["has_passive"]
+        del state["enemy_max_hp"]
+        return state
+
+    def __setstate__(self, state):
+        self.__dict__.update(state)
+
 """
 aatrox = Aatrox(get_dict("Aatrox"), 1000)
 

@@ -1,11 +1,12 @@
-from python_champions.Champion import Champion
-from python_champions.get_dict import get_dict_champ
+from src.python_champions.Champion import Champion
+from src.python_champions.get_dict import get_dict_champ
+
 
 
 class Ahri(Champion):
     def __init__(self, champ_dict):
         super().__init__(champ_dict)
-        self.total_ability_power_flat = 0
+        # self.total_ability_power_flat = 0
 
     def passive_ability(self):
         pass
@@ -47,7 +48,7 @@ class Ahri(Champion):
 
         if skill_level > -1:
             return [self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[0], self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1] * amount_used, None]
-
+    
 
 # ahri = Ahri(get_dict("Ahri"))
 """
