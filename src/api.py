@@ -1,12 +1,12 @@
 from flask import Flask
 from flask_restful import Api, Resource
 import jsonpickle
-from src.python_champions.Aatrox import Aatrox
-from src.python_champions.Ahri import Ahri
-from src.python_champions.Akali import Akali
-from src.python_champions.Seraphine import Seraphine
-from src.python_champions.get_dict import get_dict_champ
-from src.python_champions.get_dict import get_dict_item
+from python_champions.Aatrox import Aatrox
+from python_champions.Ahri import Ahri
+from python_champions.Akali import Akali
+from python_champions.Seraphine import Seraphine
+from get_dict import get_dict_champ
+from get_dict import get_dict_item
 
 
 aatrox = jsonpickle.encode(Aatrox.Aatrox(get_dict_champ("Aatrox"), 1000), unpicklable=False)
@@ -30,6 +30,8 @@ class DamageData(Resource):
     def get(self):
         return {"listOfChampions": [aatrox, ahri, akali, seraphine]}
     
+
+
 
 
 api.add_resource(DamageData, "/data")

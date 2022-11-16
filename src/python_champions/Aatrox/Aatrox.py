@@ -1,5 +1,4 @@
-from src.python_champions.Champion import Champion
-from src.python_champions.get_dict import get_dict_champ
+from python_champions.Champion import Champion
 
 
 class Aatrox(Champion):
@@ -64,13 +63,3 @@ class Aatrox(Champion):
 
     def __setstate__(self, state):
         self.__dict__.update(state)
-
-"""
-aatrox = Aatrox(get_dict("Aatrox"), 1000)
-
-# print(aatrox.r_ability(0))
-print(aatrox.auto_attack())
-print(aatrox.passive_ability())
-print(aatrox.q_ability(1, False))
-print(aatrox.w_ability(2, False))
-"""

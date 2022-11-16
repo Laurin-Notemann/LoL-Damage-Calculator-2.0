@@ -1,5 +1,4 @@
-from src.python_champions.Champion import Champion
-from src.python_champions.get_dict import get_dict_champ
+from python_champions.Champion import Champion
 
 
 class Akali(Champion):
@@ -84,14 +83,3 @@ class Akali(Champion):
 
     def __setstate__(self, state):
         self.__dict__.update(state)
-
-"""
-akali = Akali(get_dict("Akali"), 1000)
-print(akali.auto_attack())
-print(akali.q_ability(1))
-print(akali.auto_attack())
-print(akali.auto_attack())
-print(akali.e_ability(1))
-print(akali.r_ability(1, 700))
-print(akali.auto_attack())
-"""

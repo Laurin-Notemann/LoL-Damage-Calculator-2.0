@@ -1,7 +1,7 @@
 from python_champions.Seraphine.Seraphine import Seraphine
 from python_champions.Ahri.Ahri import Ahri
 from python_items.LudensTempest.LudensTempest import LudensTempest
-from python_champions.get_dict import get_dict_champ, get_dict_item
+from get_dict import get_dict_champ, get_dict_item
 
 import jsonpickle
 """

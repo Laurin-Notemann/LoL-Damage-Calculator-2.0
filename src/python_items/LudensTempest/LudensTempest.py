@@ -1,4 +1,4 @@
-from python_champions.get_dict import get_dict_item
+from get_dict import get_dict_item
 from python_items.Item import Item
 
 

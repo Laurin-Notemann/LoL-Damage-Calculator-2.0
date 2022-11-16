@@ -1,13 +1,10 @@
-import jsonpickle
-
-
 class Champion:
 
     def __init__(self, champ_dict):
         self.champ_dict = champ_dict
         # just for clarity so I don't have to write self.champ_dict["stats"] every time just self.stats
         self.stats = champ_dict["stats"]
-
+        
         self.champion_id = self.champ_dict["id"]
         self.champion_name = self.champ_dict["name"]
         self.champion_icon = "https://" + self.champ_dict["icon"][7:]

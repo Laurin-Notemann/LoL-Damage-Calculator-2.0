@@ -1,7 +1,4 @@
-import jsonpickle
-
-from src.python_champions.Champion import Champion
-from src.python_champions.get_dict import get_dict_champ
+from python_champions.Champion import Champion
 
 
 class Seraphine(Champion):
@@ -104,13 +101,3 @@ class Seraphine(Champion):
         self.__dict__.update(state)
 
 
-# sera = Seraphine(get_dict("Seraphine"), 1000)
-# print(vars(sera))
-"""
-print(sera.q_ability(250, 3))
-print(sera.w_ability(2))
-print(sera.e_ability(2))
-print(sera.r_ability(2))
-print(sera.auto_attack())
-print(sera.passive_ability())
-"""
