@@ -1,7 +1,7 @@
 from python_champions.S.Seraphine import Seraphine
 from python_champions.A.Ahri import Ahri
 from python_items.L.LudensTempest import LudensTempest
-from get_dict import get_dict_champ, get_dict_item
+from get_dict import get_json_champ, get_json_item
 
 import jsonpickle
 """
@@ -52,11 +52,10 @@ test1 = test()
 }"""
 
 
+sera = Seraphine(get_json_champ("Seraphine"), 1000)
+ahri = Ahri(get_json_champ("Ahri"))
 
-sera = Seraphine(get_dict_champ("Seraphine"), 1000)
-ahri = Ahri(get_dict_champ("Ahri"))
-
-ludens = LudensTempest(get_dict_item("6655"))
+ludens = LudensTempest(get_json_item("6655"))
 
 item_dict_for_champ = {
     "item1": ludens,

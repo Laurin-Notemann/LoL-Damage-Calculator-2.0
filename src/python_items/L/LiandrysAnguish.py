@@ -1,4 +1,4 @@
-from get_dict import get_dict_item
+from get_dict import get_json_item
 from python_items.Item import Item
 
 
@@ -13,11 +13,13 @@ class LiandrysAnguish(Item):
         damage = 0
 
         if champions_scaling_param == "AP":
-            damage = (50 + (champion_scaling_value * 0.06) + (enemy_max_health * 0.04)) / 4
+            damage = (50 + (champion_scaling_value * 0.06) +
+                      (enemy_max_health * 0.04)) / 4
 
             damage = damage * seconds_applied
 
         return [damage_type, damage, None]
+
 
 """
 liandrys = LiandrysAnguish(get_dict("6653"))

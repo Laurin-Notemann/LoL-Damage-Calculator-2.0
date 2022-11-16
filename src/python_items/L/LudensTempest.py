@@ -1,4 +1,4 @@
-from get_dict import get_dict_item
+from get_dict import get_json_item
 from python_items.Item import Item
 
 
@@ -15,6 +15,7 @@ class LudensTempest(Item):
             damage = 100 + (champion_scaling_value * 0.1)
 
         return [damage_type, damage, None]
+
 
 """
 ludens = LudensTempest(get_dict("6655"))

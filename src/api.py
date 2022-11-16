@@ -1,23 +1,21 @@
 from flask import Flask
 from flask_restful import Api, Resource
-import jsonpickle
+from jsonpickle import encode, decode 
 from python_champions.A import Aatrox, Ahri, Akali
 from python_champions.S import Seraphine
-from get_dict import get_dict_champ, get_dict_item
+from python_items.L import LiandrysAnguish, LudensTempest
+from get_dict import get_json_champ, get_json_item
 
 
+# Initialise ALL available champions + ENCODING (decoding)
+aatrox = decode(encode(Aatrox(get_json_champ("Aatrox"), 1000), unpicklable=False))
+ahri = decode(encode(Ahri(get_json_champ("Ahri")), unpicklable=False))
+akali = decode(encode(Akali(get_json_champ("Akali"), 1000), unpicklable=False))
+seraphine = decode(encode(Seraphine(get_json_champ("Seraphine"), 1000), unpicklable=False))
 
-aatrox = jsonpickle.encode(Aatrox(get_dict_champ("Aatrox"), 1000), unpicklable=False)
-ahri = jsonpickle.encode(Ahri(get_dict_champ("Ahri")), unpicklable=False)
-akali = jsonpickle.encode(Akali(get_dict_champ("Akali"), 1000), unpicklable=False)
-seraphine = jsonpickle.encode(Seraphine(get_dict_champ("Seraphine"), 1000), unpicklable=False)
-
-
-
-aatrox = jsonpickle.decode(aatrox)
-ahri = jsonpickle.decode(ahri)
-akali = jsonpickle.decode(akali)
-seraphine = jsonpickle.decode(seraphine)
+# Initialise ALL available items + ENCDODING (decoding)
+liandrys = decode(encode(LiandrysAnguish(get_json_item("6653"))))
+ludents = decode(encode(LudensTempest(get_json_item("6655"))))
 
 
 app = Flask(__name__)
