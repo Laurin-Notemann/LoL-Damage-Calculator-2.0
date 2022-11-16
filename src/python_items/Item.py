@@ -1,6 +1,3 @@
-import jsonpickle
-
-
 class Item:
     def __init__(self, item_dict):
         self.item_dict = item_dict
@@ -70,6 +67,9 @@ class Item:
         self.mythic_slow_resistance = 0 # this has to be defined in the corresponing item (sunfire aegis)
 
         # Mythic item stats
+        
+
+    def set_mythic_stats(self):
         if self.item_no_effects == False and not self.item_passives:
             for item in self.item_passives:
                 if item["mythic"]:
@@ -90,7 +90,7 @@ class Item:
                     self.mythic_ability_haste_flat = stats["abilityHaste"]["flat"]
                     self.mythic_omnivamp_flat_percentage = stats["omnivamp"]["percent"]
                     self.mythic_tenacity_flat = stats["omnivamp"]["flat"]
-
+                    
     def item_active_dmg(self):
         pass
 
@@ -101,6 +101,8 @@ class Item:
         state = self.__dict__.copy()
         del state["item_dict"]
         del state["stats"]
+        del state["item_builds_from"]
+        del state["item_builds_into"]
         del state["item_passives"]
         del state["item_actives"]
         return state

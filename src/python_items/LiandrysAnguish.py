@@ -1,4 +1,3 @@
-from get_dict import get_json_item
 from python_items.Item import Item
 
 
@@ -19,10 +18,3 @@ class LiandrysAnguish(Item):
             damage = damage * seconds_applied
 
         return [damage_type, damage, None]
-
-
-"""
-liandrys = LiandrysAnguish(get_dict("6653"))
-
-print(liandrys.item_passives_dmg("AP", 1000, 4, 5000))
-"""

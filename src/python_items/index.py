@@ -4,7 +4,12 @@ from python_items.LiandrysAnguish import LiandrysAnguish
 from python_items.LudensTempest import LudensTempest
 
 # Initialise ALL available items + ENCDODING (decoding)
-liandrys = decode(encode(LiandrysAnguish(get_json_item("6653"))))
-ludens = decode(encode(LudensTempest(get_json_item("6655"))))
+
+liandrys = LiandrysAnguish(get_json_item("6653"))
+liandrys.set_mythic_stats()
+liandrys = decode(encode(liandrys, unpicklable=False))
+ludens = LudensTempest(get_json_item("6655"))
+ludens.set_mythic_stats()
+ludens = decode(encode(ludens, unpicklable=False))
 
 list_of_items = [liandrys, ludens]
