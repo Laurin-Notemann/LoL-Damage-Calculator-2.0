@@ -1,4 +1,4 @@
-from python_champions.S.Seraphine import Seraphine
+from python_champions.Seraphine import Seraphine
 from python_champions.A.Ahri import Ahri
 from python_items.L.LudensTempest import LudensTempest
 from get_dict import get_json_champ, get_json_item
