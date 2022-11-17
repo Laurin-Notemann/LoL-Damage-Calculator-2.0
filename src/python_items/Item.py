@@ -66,6 +66,8 @@ class Item:
         self.mythic_tenacity_flat = 0
         self.mythic_slow_resistance = 0 # this has to be defined in the corresponing item (sunfire aegis)
 
+        self.has_active = False
+
         # Mythic item stats
         
 
