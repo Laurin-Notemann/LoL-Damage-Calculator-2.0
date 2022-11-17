@@ -67,6 +67,7 @@ class Item:
         self.mythic_slow_resistance = 0 # this has to be defined in the corresponing item (sunfire aegis)
 
         self.has_active = False
+        self.is_unique = False
 
         # Mythic item stats
         
