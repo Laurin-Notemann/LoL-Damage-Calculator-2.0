@@ -1,6 +1,6 @@
 from python_champions.index import list_of_py_champs
 from python_items.index import list_of_py_items
-from python_champions.Champion import Champion
+from Champion.Champion import Champion
 from jsonpickle import encode, set_encoder_options
 
 test_dict = {
@@ -20,8 +20,9 @@ def update_champion(data: dict):
         chosen_champ,
         data["championLevel"],
         data["dummyStats"][0])
+    print(chosen_champ.champion_name, chosen_champ.item_dict, chosen_champ.champion_level, chosen_champ.enemy_health)
     return chosen_champ
-    # print(chosen_champ.champion_name, chosen_champ.item_dict, chosen_champ.champion_level, chosen_champ.enemy_health)
+    
 
 
 def find_champion_in_list(champ_id: int):
@@ -68,4 +69,8 @@ def test(test_dict: dict):
     json_champ = encode(champ, indent=4, unpicklable=False)
     return json_champ
 
-print(test(test_dict))
+#print(test(test_dict))
+
+
+print(list_of_py_champs[3].test_something())
+print(list_of_py_champs[3].e_ability(2))

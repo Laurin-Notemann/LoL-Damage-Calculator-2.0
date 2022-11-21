@@ -1,11 +1,11 @@
-from python_champions.Seraphine import Seraphine
+"""from python_champions.Seraphine import Seraphine
 from python_champions.A.Ahri import Ahri
 from python_items.L.LudensTempest import LudensTempest
-from get_dict import get_json_champ, get_json_item
-
+from get_dict import get_json_champ, get_json_item"""
+"""
 import jsonpickle
 """
-ability_dict = {
+"""ability_dict = {
     "Q": [
         {
             "effects1": {
@@ -48,8 +48,8 @@ class test:
 
 test1 = test()
 
-
-}"""
+"""
+"""
 
 
 sera = Seraphine(get_json_champ("Seraphine"), 1000)
@@ -105,7 +105,7 @@ return_dict = {
     "damage_of_abilities": {
         "actionNumber": "damagenumber"
     }
-}
+}"""
 test_data = {
     "abilityLevel": [1, 3, 4, 2],
     "championLevel": 8,
@@ -114,3 +114,6 @@ test_data = {
     "championID": 147,
     "listOfActionNames": ["Q", "Q", "AA", "W", "E", "R"]
 }
+
+for i in range(1,19, 5):
+    print(i)

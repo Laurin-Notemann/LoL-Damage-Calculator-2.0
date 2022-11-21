@@ -1,4 +1,4 @@
-from python_champions.Champion import Champion
+from Champion.Champion import Champion
 
 
 

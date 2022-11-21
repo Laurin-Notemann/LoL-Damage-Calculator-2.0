@@ -1,3 +1,5 @@
+from ..Ability.Bounds import Bounds
+
 class Champion:
 
     def __init__(self, champ_dict):
@@ -432,7 +434,6 @@ def multiplicative_calc(current_value, item_value):
         return round(1 - (current_value * (item_value / 100)), 4)
 
 
-class Bounds:
-    def __init__(self, lower, upper):
-        self.lower = lower
-        self.upper = upper
+
+
+

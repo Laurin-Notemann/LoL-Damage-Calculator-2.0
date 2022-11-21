@@ -1,4 +1,4 @@
-from python_champions.Champion import Champion
+from Champion.Champion import Champion, Ability, Bounds
 
 
 class Seraphine(Champion):
@@ -12,9 +12,21 @@ class Seraphine(Champion):
         super().__init__(champ_dict)
         self.echo = 0
         self.note_stacks = 0
+        self.ability_p = Ability("P", "Stage Presence", None, self.passive_ability)
+        self.ability_q = Ability("Q", "High Note", Bounds(0,5), self.wrapper_for_dmg, 0, 0, "AP")
+        self.ability_e = Ability("E", "Beat Drop", Bounds(0,5), self.wrapper_for_dmg, 0, 0, "AP", self.increase_note_stacks)
+        self.ability_r = Ability("R", "Encore", Bounds(0,3), self.wrapper_for_dmg, 0, 0, "AP", self.increase_note_stacks)
+        
+
         # self.total_ability_power_flat = 30  # just for testing not for final
 
         # self.is_echo = False
+
+    def test_something(self):
+        return self.ability_q.regular_damage(2)
+
+    def increase_note_stacks(self):
+        self.note_stacks +=1
 
     def check_echo(self):
         if self.echo == 3:
@@ -97,5 +109,4 @@ class Seraphine(Champion):
 
     def __setstate__(self, state):
         self.__dict__.update(state)
-
-
+        

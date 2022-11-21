@@ -11,6 +11,7 @@ ahri = Ahri(get_json_champ("Ahri"))
 akali = Akali(get_json_champ("Akali"))
 seraphine = Seraphine(get_json_champ("Seraphine"))
 
+
 list_of_py_champs = [aatrox, ahri, akali, seraphine]
 
 # ENCODING (decoding) all champs
@@ -20,3 +21,7 @@ akali = decode(encode(akali, unpicklable=False))
 seraphine = decode(encode(seraphine, unpicklable=False))
 
 list_of_champs = [aatrox, ahri, akali, seraphine]
+
+
+
+
