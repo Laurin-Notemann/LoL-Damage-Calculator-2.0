@@ -4,7 +4,7 @@ class Champion:
         self.champ_dict = champ_dict
         # just for clarity so I don't have to write self.champ_dict["stats"] every time just self.stats
         self.stats = champ_dict["stats"]
-        
+
         self.champion_id = self.champ_dict["id"]
         self.champion_name = self.champ_dict["name"]
         self.champion_icon = "https://" + self.champ_dict["icon"][7:]
@@ -98,10 +98,10 @@ class Champion:
         self.mythic_tenacity = 0.0
         self.mythic_slow_resistance = 0.0
 
-        self.q_bounds = Bounds(0,5)
-        self.w_bounds = Bounds(0,5)
-        self.e_bounds = Bounds(0,5)
-        self.r_bounds = Bounds(0,3)
+        self.q_bounds = Bounds(0, 5)
+        self.w_bounds = Bounds(0, 5)
+        self.e_bounds = Bounds(0, 5)
+        self.r_bounds = Bounds(0, 3)
 
         self.q_name = self.champ_dict["abilities"]["Q"][0]["name"]
         self.w_name = self.champ_dict["abilities"]["W"][0]["name"]
@@ -110,17 +110,13 @@ class Champion:
 
         self.enemy_health = 0.0
 
-        # following two method calls only for test purposes
-
-        # self.set_total_value_to_based_on_level_and_item_stats()
-
     def set_champion_level(self, current_level):
         self.champion_level = current_level
         self.set_base_stats_based_on_level()
 
     def set_items_for_champion(self, item_dict):
         self.item_dict = item_dict
-    
+
     def set_enemy_health(self, enemy_health):
         self.enemy_health = enemy_health
 
@@ -160,6 +156,7 @@ class Champion:
         self.add_special_item_stats()
 
         #  Then we calculate the total damage based on the base stats and the bonus stats
+        self.set_base_stats_based_on_level
         self.set_total_stats()
 
     def auto_attack(self):
@@ -289,7 +286,7 @@ class Champion:
     def add_item_stats(self):
         for i in range(1, 7):
             curr_item = self.item_dict[f"item{i}"]
-            if curr_item != "":
+            if curr_item != None:
 
                 if curr_item.is_legendary:
                     self.number_of_legendary_items += 1
@@ -346,7 +343,7 @@ class Champion:
 
     def add_mythic_stats(self):
         if self.has_mythic:
-            for i in range(self.number_of_legendary_items):
+            for i in range(int(self.number_of_legendary_items)):
                 curr_item = self.item_dict[f"item{i}"]
 
                 self.bonus_health_points += curr_item.mythic_health_flat
@@ -433,8 +430,6 @@ def multiplicative_calc(current_value, item_value):
         return round(1 - (item_value / 100), 4)
     else:
         return round(1 - (current_value * (item_value / 100)), 4)
-
-
 
 
 class Bounds:
