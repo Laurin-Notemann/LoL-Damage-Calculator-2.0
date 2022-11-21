@@ -3,7 +3,7 @@ from python_champions.Champion import Champion
 
 class Seraphine(Champion):
 
-    def __init__(self, champ_dict, enemy_max_hp):
+    def __init__(self, champ_dict):
         """ Seraphine init:
         echo: increases by 1 everytime she uses an ability, when echo = 3 an ability will be performed twice and set echo = 0
         note_stacks: increases by 1 everytime she uses an ability, max is 4, when she AA she consumes then and deals damage and set note_stacks = 0
@@ -12,7 +12,6 @@ class Seraphine(Champion):
         super().__init__(champ_dict)
         self.echo = 0
         self.note_stacks = 0
-        self.enemy_max_hp = enemy_max_hp
         # self.total_ability_power_flat = 30  # just for testing not for final
 
         # self.is_echo = False
@@ -61,7 +60,7 @@ class Seraphine(Champion):
         if skill_level > -1:
             self.note_stacks += 1
 
-            enemy_missing_health_perc = self.get_missing_health(self.enemy_max_hp, enemy_current_hp)
+            enemy_missing_health_perc = self.get_missing_health(self.enemy_health, enemy_current_hp)
 
             damage_amplifier_missing_health = self.get_amp_based_on_missing_health(enemy_missing_health_perc, 0.0003, 0.0002, 0.75)
 
@@ -94,7 +93,6 @@ class Seraphine(Champion):
         del state["item_dict"]
         del state["echo"]
         del state["note_stacks"]
-        del state["enemy_max_hp"]
         return state
 
     def __setstate__(self, state):

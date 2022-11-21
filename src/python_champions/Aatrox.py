@@ -3,9 +3,8 @@ from python_champions.Champion import Champion
 
 class Aatrox(Champion):
 
-    def __init__(self, champ_dict, enemy_max_hp):
+    def __init__(self, champ_dict):
         super().__init__(champ_dict)
-        self.enemy_max_hp = enemy_max_hp
         self.has_passive = True
 
     def auto_attack(self):
@@ -22,7 +21,7 @@ class Aatrox(Champion):
         for i in range(1, 19):
             perc_amp += 0.0041
             if self.champion_level == i:
-                return [damage_type, perc_amp * self.enemy_max_hp, None]
+                return [damage_type, perc_amp * self.enemy_health, None]
 
     def q_ability(self, skill_level=-1, is_sweet_spot=False, time_casted=0):
         key = "Q"
@@ -58,7 +57,6 @@ class Aatrox(Champion):
         del state["stats"]
         del state["item_dict"]
         del state["has_passive"]
-        del state["enemy_max_hp"]
         return state
 
     def __setstate__(self, state):

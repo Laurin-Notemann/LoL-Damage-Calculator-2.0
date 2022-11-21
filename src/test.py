@@ -84,3 +84,33 @@ jsonpickle.set_encoder_options('json', indent=4)
 test = jsonpickle.encode(sera, unpicklable=False)
 
 print(test)
+
+
+json_dict = {
+    "selected_champ": "name_of_champ",
+    "selected_items": ["name_of_item1", "name_of_item2", ".."],
+    "selected_actions": ["name_of_action1", "name_of_action2", ".."],
+    "champ_level": 1,
+    "ability_level": ["qlevel_number", "wlevel_number", ".."],
+    "dummy": {
+        "hp": 0,
+        "armor": 0,
+        "magic_res": 0
+    }
+}
+
+return_dict = {
+    "champ_with_new_stats": "champModel",
+    "damageoutput": ["total", "true", "physic", "magic"],
+    "damage_of_abilities": {
+        "actionNumber": "damagenumber"
+    }
+}
+test_data = {
+    "abilityLevel": [1, 3, 4, 2],
+    "championLevel": 8,
+    "listOfItemIDs": [0, 6653, 0, 6655, 0, 0],
+    "dummyStats": [1000, 0, 0],
+    "championID": 147,
+    "listOfActionNames": ["Q", "Q", "AA", "W", "E", "R"]
+}

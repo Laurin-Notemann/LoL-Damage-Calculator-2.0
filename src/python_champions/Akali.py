@@ -3,10 +3,9 @@ from python_champions.Champion import Champion
 
 class Akali(Champion):
 
-    def __init__(self, champ_dict, enemy_max_hp):
+    def __init__(self, champ_dict):
         super().__init__(champ_dict)
         self.has_assassins_mark = False
-        self.enemy_max_hp = enemy_max_hp
         #  self.total_ability_power_flat = 50
 
     def auto_attack(self):
@@ -55,7 +54,7 @@ class Akali(Champion):
         if skill_level > -1:
             self.has_assassins_mark = True  # technically works for both instances not implemented yet
 
-            enemy_missing_health_perc = self.get_missing_health(self.enemy_max_hp, enemy_current_hp)
+            enemy_missing_health_perc = self.get_missing_health(self.enemy_health, enemy_current_hp)
             damage_amp = self.get_amp_based_on_missing_health(enemy_missing_health_perc, 0.01, 0.0286, 0.7)
 
             damage_first_r = self.wrapper_for_dmg(key, skill_level, 0, 0, "BONUS_AD", "AP")
@@ -78,7 +77,6 @@ class Akali(Champion):
         del state["stats"]
         del state["item_dict"]
         del state["has_assassins_mark"]
-        del state["enemy_max_hp"]
         return state
 
     def __setstate__(self, state):

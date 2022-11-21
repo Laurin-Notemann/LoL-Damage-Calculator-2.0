@@ -98,6 +98,18 @@ class Champion:
         self.mythic_tenacity = 0.0
         self.mythic_slow_resistance = 0.0
 
+        self.q_bounds = Bounds(0,5)
+        self.w_bounds = Bounds(0,5)
+        self.e_bounds = Bounds(0,5)
+        self.r_bounds = Bounds(0,3)
+
+        self.q_name = self.champ_dict["abilities"]["Q"][0]["name"]
+        self.w_name = self.champ_dict["abilities"]["W"][0]["name"]
+        self.e_name = self.champ_dict["abilities"]["E"][0]["name"]
+        self.r_name = self.champ_dict["abilities"]["R"][0]["name"]
+
+        self.enemy_health = 0.0
+
         # following two method calls only for test purposes
 
         # self.set_total_value_to_based_on_level_and_item_stats()
@@ -108,6 +120,9 @@ class Champion:
 
     def set_items_for_champion(self, item_dict):
         self.item_dict = item_dict
+    
+    def set_enemy_health(self, enemy_health):
+        self.enemy_health = enemy_health
 
     def per_level_scaling(self, base_stat, growth_stat, round_by):
         return round(base_stat + growth_stat * (self.champion_level - 1) * (0.7025 + 0.0175 * (self.champion_level - 1)), round_by)
@@ -418,3 +433,11 @@ def multiplicative_calc(current_value, item_value):
         return round(1 - (item_value / 100), 4)
     else:
         return round(1 - (current_value * (item_value / 100)), 4)
+
+
+
+
+class Bounds:
+    def __init__(self, lower, upper):
+        self.lower = lower
+        self.upper = upper

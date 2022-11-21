@@ -1,25 +1,29 @@
-from flask import Flask
-from flask_restful import Api, Resource
+from flask import Flask, request
 from python_champions.index import list_of_champs
 from python_items.index import list_of_items
-from get_dict import get_json_champ, get_json_item
+from additemstochampions import update_champion
 
 app = Flask(__name__)
-api = Api(app)
+
+posted_data = {}
 
 
-class ChampionData(Resource):
-    def get(self):
-        return {"listOfChampions": list_of_champs}
+@app.route("/getInitData/<string:res>", methods=["GET"])
+def calcDat(res):
+    if request.method == "GET":
+        if res == "champs":
+            return {"listOfChampions": list_of_champs}
+        elif res == "items":
+            return {"listOfItems": list_of_items}
 
 
-class ItemData(Resource):
-    def get(self):
-        return {"listOfItems": list_of_items}
+@app.route("/sendData", methods=["POST"])
+def sendData():
+    if request.method == "POST":
+        posted_data = request.get_json(force=True)
+        update_champion(posted_data)
+        return posted_data
 
-
-api.add_resource(ChampionData, "/getInitChampions")
-api.add_resource(ItemData, "/getInitItems")
 
 if __name__ == "__main__":
     app.run(debug=True)
