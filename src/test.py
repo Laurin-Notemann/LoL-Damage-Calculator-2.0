@@ -117,3 +117,9 @@ test_data = {
 
 for i in range(1,19, 5):
     print(i)
+
+a = [1,2]
+b = [1]
+
+print(len(a))
+print(len(b))
