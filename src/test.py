@@ -123,3 +123,13 @@ b = [1]
 
 print(len(a))
 print(len(b))
+
+def test(*args):
+    print(type(args))
+
+test(1,2,3,4)
+
+
+t = "% AP"
+
+print(t[2:])

@@ -1,40 +1,45 @@
-from ..Ability.Bounds import Bounds
+from ChampionAbility.Bounds import Bounds
+from ChampionAbility.Ability import Ability
+from ChampionAbility.Damage import ScalingValue
+from ChampionAbility.get_abilities_data import get_abilities_data
+
 
 class Champion:
 
     def __init__(self, champ_dict):
-        self.champ_dict = champ_dict
+        self.champ_dict: dict = champ_dict
         # just for clarity so I don't have to write self.champ_dict["stats"] every time just self.stats
-        self.stats = champ_dict["stats"]
+        self.stats: dict = champ_dict["stats"]
 
-        self.champion_id = self.champ_dict["id"]
-        self.champion_name = self.champ_dict["name"]
-        self.champion_icon = "https://" + self.champ_dict["icon"][7:]
-        self.champion_resource = self.champ_dict["resource"]
-        self.champion_attack_type = self.champ_dict["attackType"]
-        self.champion_adaptive_type = self.champ_dict["adaptiveType"]
+        self.champion_id: int = self.champ_dict["id"]
+        self.champion_name: str = self.champ_dict["name"]
+        self.champion_icon: str = "https://" + self.champ_dict["icon"][7:]
+        self.champion_resource: str = self.champ_dict["resource"]
+        self.champion_attack_type: str = self.champ_dict["attackType"]
+        self.champion_adaptive_type: str = self.champ_dict["adaptiveType"]
 
-        self.champion_level = 1  # level 1 is standard can be changed with set_champion_level
+        # level 1 is standard can be changed with set_champion_level
+        self.champion_level: int = 1
 
-        self.base_health = self.stats["health"]["flat"] * 1.0
-        self.base_health_regen = self.stats["healthRegen"]["flat"] * 1.0
-        self.base_mana = self.stats["mana"]["flat"] * 1.0
-        self.base_mana_regen = self.stats["manaRegen"]["flat"] * 1.0
-        self.base_armor = self.stats["armor"]["flat"] * 1.0
-        self.base_magic_resistance = self.stats["magicResistance"]["flat"] * 1.0
-        self.base_attack_damage = self.stats["attackDamage"]["flat"] * 1.0
+        self.base_health: float = self.stats["health"]["flat"] * 1.0
+        self.base_health_regen: float = self.stats["healthRegen"]["flat"] * 1.0
+        self.base_mana: float = self.stats["mana"]["flat"] * 1.0
+        self.base_mana_regen: float = self.stats["manaRegen"]["flat"] * 1.0
+        self.base_armor: float = self.stats["armor"]["flat"] * 1.0
+        self.base_magic_resistance: float = self.stats["magicResistance"]["flat"] * 1.0
+        self.base_attack_damage: float = self.stats["attackDamage"]["flat"] * 1.0
         # This is a percentage
-        self.base_attack_speed = self.stats["attackSpeed"]["flat"] * 1.0
-        self.base_movespeed = self.stats["movespeed"]["flat"] * 1.0
+        self.base_attack_speed: float = self.stats["attackSpeed"]["flat"] * 1.0
+        self.base_movespeed: float = self.stats["movespeed"]["flat"] * 1.0
 
-        self.health_per_level = self.stats["health"]["perLevel"] * 1.0
-        self.health_regen_per_level = self.stats["healthRegen"]["perLevel"] * 1.0
-        self.mana_per_level = self.stats["mana"]["perLevel"] * 1.0
-        self.mana_regen_per_level = self.stats["manaRegen"]["perLevel"] * 1.0
-        self.armor_per_level = self.stats["armor"]["perLevel"] * 1.0
-        self.magic_resistance_per_level = self.stats["magicResistance"]["perLevel"] * 1.0
-        self.attack_damage_per_level = self.stats["attackDamage"]["perLevel"] * 1.0
-        self.attack_speed_per_level = self.stats["attackSpeed"]["perLevel"] * 1.0
+        self.health_per_level: float = self.stats["health"]["perLevel"] * 1.0
+        self.health_regen_per_level: float = self.stats["healthRegen"]["perLevel"] * 1.0
+        self.mana_per_level: float = self.stats["mana"]["perLevel"] * 1.0
+        self.mana_regen_per_level: float = self.stats["manaRegen"]["perLevel"] * 1.0
+        self.armor_per_level: float = self.stats["armor"]["perLevel"] * 1.0
+        self.magic_resistance_per_level: float = self.stats["magicResistance"]["perLevel"] * 1.0
+        self.attack_damage_per_level: float = self.stats["attackDamage"]["perLevel"] * 1.0
+        self.attack_speed_per_level: float = self.stats["attackSpeed"]["perLevel"] * 1.0
 
         # self.champ_dict["stats"]["criticalStrikeDamage"]["flat"] not correct in the jsons
         self.critical_strike_damage = 175.0
@@ -80,7 +85,7 @@ class Champion:
         self.total_physical_vamp = 0.0
         self.total_omnivamp = 0.0
 
-        self.item_dict = {
+        self.item_dict: dict = {
             "item1": None,
             "item2": None,
             "item3": None,
@@ -88,7 +93,7 @@ class Champion:
             "item5": None,
             "item6": None
         }
-        self.has_mythic = False
+        self.has_mythic: bool = False
         self.number_of_legendary_items = 0.0
         self.has_steraks_gage = False
         self.has_rabadons_deathcap = False
@@ -100,17 +105,33 @@ class Champion:
         self.mythic_tenacity = 0.0
         self.mythic_slow_resistance = 0.0
 
-        self.q_bounds = Bounds(0, 5)
-        self.w_bounds = Bounds(0, 5)
-        self.e_bounds = Bounds(0, 5)
-        self.r_bounds = Bounds(0, 3)
+        self.q_bounds: Bounds = Bounds(0, 5)
+        self.w_bounds: Bounds = Bounds(0, 5)
+        self.e_bounds: Bounds = Bounds(0, 5)
+        self.r_bounds: Bounds = Bounds(0, 3)
 
-        self.q_name = self.champ_dict["abilities"]["Q"][0]["name"]
-        self.w_name = self.champ_dict["abilities"]["W"][0]["name"]
-        self.e_name = self.champ_dict["abilities"]["E"][0]["name"]
-        self.r_name = self.champ_dict["abilities"]["R"][0]["name"]
+        self.q_name: str = self.champ_dict["abilities"]["Q"][0]["name"]
+        self.w_name: str = self.champ_dict["abilities"]["W"][0]["name"]
+        self.e_name: str = self.champ_dict["abilities"]["E"][0]["name"]
+        self.r_name: str = self.champ_dict["abilities"]["R"][0]["name"]
+
+        # A list of abilities that contains the static information about the ability
+        self.ability_q: list[Ability] = get_abilities_data(
+            "Q", champ_dict, self.q_bounds)
+        self.ability_w: list[Ability] = get_abilities_data(
+            "W", champ_dict, self.q_bounds)
+        self.ability_e: list[Ability] = get_abilities_data(
+            "E", champ_dict, self.q_bounds)
+        self.ability_r: list[Ability] = get_abilities_data(
+            "R", champ_dict, self.q_bounds)
 
         self.enemy_health = 0.0
+
+        self.scaling_stats_values = {
+            "AD": ScalingValue("AD", self.total_attack_damage),
+            "bonus AD": ScalingValue("bonus AD", self.bonus_attack_damage),
+            "AP": ScalingValue("AP", self.total_ability_power_flat)
+        }
 
     def set_champion_level(self, current_level):
         self.champion_level = current_level
@@ -151,6 +172,13 @@ class Champion:
             0,
             self.attack_speed_per_level / 100, 4)
 
+    def set_scaling_values(self):
+        self.scaling_stats_values = [
+            ScalingValue("AD", self.total_attack_damage),
+            ScalingValue("BONUS_AD", self.bonus_attack_damage),
+            ScalingValue("AP", self.total_ability_power_flat)
+        ]
+
     def set_total_value_to_based_on_level_and_item_stats(self):
         # First we add all the stats from the items that are chosen
         self.add_item_stats()
@@ -158,8 +186,9 @@ class Champion:
         self.add_special_item_stats()
 
         #  Then we calculate the total damage based on the base stats and the bonus stats
-        self.set_base_stats_based_on_level
+        self.set_base_stats_based_on_level()
         self.set_total_stats()
+        self.set_scaling_values()
 
     def auto_attack(self):
         return ["PHYSICAL_DAMAGE", self.total_attack_damage, None]
@@ -246,44 +275,6 @@ class Champion:
         damage_total_without_amp = self.get_dmg_based_on_flat_and_percentage_values(key, skill_level, effect_number, attribute_number,
                                                                                     scaling_param, scaling_param_two)
         return [damage_total_without_amp[1], round(damage_total_without_amp[0], 3), None]
-
-    def get_ability_values(self, key):
-        ability_dict = self.champ_dict["abilities"][key]
-
-        ability_attribute_modifier_value = {key: [{}]}
-
-        for ability_number in range(len(ability_dict)):
-            for effect_number in range(len(ability_dict[ability_number]["effects"])):
-                ability_attribute_modifier_value[key][ability_number][f"effect{effect_number}"] = {
-                }
-                for attribute_number in range(len(ability_dict[ability_number]["effects"][effect_number]["leveling"])):
-                    ability_attribute_modifier_value[key][ability_number][f"effect{effect_number}"][f"attribute{attribute_number}"] = [
-                    ]
-                    for modifier_number in range(
-                            len(ability_dict[ability_number]["effects"][effect_number]["leveling"][attribute_number]["modifiers"])):
-                        effect_mod_values = \
-                            ability_dict[ability_number]["effects"][effect_number]["leveling"][attribute_number]["modifiers"][modifier_number][
-                                "values"]
-                        effect_mod_unit = \
-                            ability_dict[ability_number]["effects"][effect_number]["leveling"][attribute_number]["modifiers"][modifier_number][
-                                "units"]
-                        ability_attribute_modifier_value[key][ability_number][f"effect{effect_number}"][f"attribute{attribute_number}"].append(
-                            [effect_mod_values, effect_mod_unit])
-
-            if ability_dict[ability_number]["cost"] is not None:
-                for modifier_umber in range(len(ability_dict[ability_number]["cost"]["modifiers"])):
-                    cost_mod_value = ability_dict[ability_number]["cost"]["modifiers"][modifier_umber]["values"]
-                    ability_attribute_modifier_value[key][ability_number]["cost"] = cost_mod_value
-
-            if ability_dict[ability_number]["cooldown"] is not None:
-                for modifier_umber in range(len(ability_dict[ability_number]["cooldown"]["modifiers"])):
-                    cooldown_mod_value = ability_dict[ability_number]["cooldown"]["modifiers"][modifier_umber]["values"]
-                    ability_attribute_modifier_value[key][ability_number]["cooldown"] = cooldown_mod_value
-
-            ability_attribute_modifier_value[key][ability_number][
-                "damage_type"] = ability_dict[ability_number]["damageType"]
-
-        return ability_attribute_modifier_value
 
     def add_item_stats(self):
         for i in range(1, 7):
@@ -416,6 +407,9 @@ class Champion:
 
         self.total_critical_chance = round(self.total_critical_chance, 4)
 
+        self.scaling_stats_values = [
+            self.total_attack_damage, self.bonus_attack_damage, self.total_ability_power_flat]
+
     def __getstate__(self):
         state = self.__dict__.copy()
         del state["champ_dict"]
@@ -432,8 +426,3 @@ def multiplicative_calc(current_value, item_value):
         return round(1 - (item_value / 100), 4)
     else:
         return round(1 - (current_value * (item_value / 100)), 4)
-
-
-
-
-
