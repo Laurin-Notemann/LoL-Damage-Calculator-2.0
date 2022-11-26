@@ -49,7 +49,7 @@ def get_effect_attributes(list_of_attribute_dicts: list):
     for attribute_number in range(len(list_of_attribute_dicts)):
         curr_dict = list_of_attribute_dicts[attribute_number]
 
-        attributes_list.extend(get_attribute_modifiers(curr_dict["modifiers"]))
+        attributes_list.append(get_attribute_modifiers(curr_dict["modifiers"]))
 
     return attributes_list
 

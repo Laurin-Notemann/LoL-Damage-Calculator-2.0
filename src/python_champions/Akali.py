@@ -29,40 +29,49 @@ class Akali(Champion):
                 passive_damage += 15
         return ["MAGIC_DAMAGE", passive_damage + attack_damage_amp + ability_power_amp]
 
-    def q_ability(self, skill_level=-1):
+    def q_action(self, skill_level=-1):
         key = "Q"
 
         if skill_level > -1:
             self.has_assassins_mark = True
             return self.wrapper_for_dmg(key, skill_level, 0, 0, "AD", "AP")
 
-    def w_ability(self, skill_level=-1):
+    def w_action(self, skill_level=-1):
         return None
 
-    def e_ability(self, skill_level=-1, first_instance=True, second_instance=True):
+    def e_action(self, skill_level=-1, first_instance=True, second_instance=True):
         key = "E"
 
         if skill_level > -1:
-            self.has_assassins_mark = True  # technically works for both instances not implemented yet
+            # technically works for both instances not implemented yet
+            self.has_assassins_mark = True
             if second_instance:
                 return self.wrapper_for_dmg(key, skill_level, 2, 1, "AD", "AP")
             return self.wrapper_for_dmg(key, skill_level, 0, 0, "AD", "AP")
 
-    def r_ability(self, skill_level=-1, enemy_current_hp=0, first_instance=True, second_instance=True):
+    def r_action(self, skill_level=-1, enemy_current_hp=0, first_instance=True, second_instance=True):
         key = "R"
 
         if skill_level > -1:
-            self.has_assassins_mark = True  # technically works for both instances not implemented yet
+            # technically works for both instances not implemented yet
+            self.has_assassins_mark = True
 
-            enemy_missing_health_perc = self.get_missing_health(self.enemy_health, enemy_current_hp)
-            damage_amp = self.get_amp_based_on_missing_health(enemy_missing_health_perc, 0.01, 0.0286, 0.7)
+            enemy_missing_health_perc = self.get_missing_health(
+                self.enemy_health, enemy_current_hp)
+            damage_amp = self.get_amp_based_on_missing_health(
+                enemy_missing_health_perc, 0.01, 0.0286, 0.7)
 
-            damage_first_r = self.wrapper_for_dmg(key, skill_level, 0, 0, "BONUS_AD", "AP")
-            damage_second_r_without_amp = self.wrapper_for_dmg(key, skill_level, 2, 0, "AP")
-            damage_second_r_with_amp = round(damage_second_r_without_amp[1] + (damage_second_r_without_amp[1] * damage_amp), 3)
-            damage_second_r = [damage_second_r_without_amp[0], damage_second_r_with_amp, None]
+            damage_first_r = self.wrapper_for_dmg(
+                key, skill_level, 0, 0, "BONUS_AD", "AP")
+            damage_second_r_without_amp = self.wrapper_for_dmg(
+                key, skill_level, 2, 0, "AP")
+            damage_second_r_with_amp = round(
+                damage_second_r_without_amp[1] + (damage_second_r_without_amp[1] * damage_amp), 3)
+            damage_second_r = [damage_second_r_without_amp[0],
+                               damage_second_r_with_amp, None]
 
-            damage_total = ["MAGIC_DAMAGE", damage_first_r[1] + damage_second_r[1], None]
+            damage_total = ["MAGIC_DAMAGE",
+                            damage_first_r[1] + damage_second_r[1], None]
 
             if first_instance and second_instance:
                 return damage_total

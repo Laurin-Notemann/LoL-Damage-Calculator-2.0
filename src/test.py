@@ -115,21 +115,27 @@ test_data = {
     "listOfActionNames": ["Q", "Q", "AA", "W", "E", "R"]
 }
 
-for i in range(1,19, 5):
+for i in range(1, 19, 5):
     print(i)
 
-a = [1,2]
+a = [1, 2]
 b = [1]
 
 print(len(a))
 print(len(b))
 
+
 def test(*args):
     print(type(args))
 
-test(1,2,3,4)
+
+test(1, 2, 3, 4)
 
 
 t = "% AP"
 
 print(t[2:])
+
+a = []
+print(len(a))
+

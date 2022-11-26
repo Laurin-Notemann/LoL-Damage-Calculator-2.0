@@ -2,6 +2,7 @@ from ChampionAbility.Bounds import Bounds
 from ChampionAbility.Ability import Ability
 from ChampionAbility.Damage import ScalingValue
 from ChampionAbility.get_abilities_data import get_abilities_data
+from ChampionAbility.Damage import Damage
 
 
 class Champion:
@@ -21,69 +22,70 @@ class Champion:
         # level 1 is standard can be changed with set_champion_level
         self.champion_level: int = 1
 
-        self.base_health: float = self.stats["health"]["flat"] * 1.0
-        self.base_health_regen: float = self.stats["healthRegen"]["flat"] * 1.0
-        self.base_mana: float = self.stats["mana"]["flat"] * 1.0
-        self.base_mana_regen: float = self.stats["manaRegen"]["flat"] * 1.0
-        self.base_armor: float = self.stats["armor"]["flat"] * 1.0
-        self.base_magic_resistance: float = self.stats["magicResistance"]["flat"] * 1.0
-        self.base_attack_damage: float = self.stats["attackDamage"]["flat"] * 1.0
+        self.base_health: float = self.stats["health"]["flat"]
+        self.base_health_regen: float = self.stats["healthRegen"]["flat"]
+        self.base_mana: float = self.stats["mana"]["flat"]
+        self.base_mana_regen: float = self.stats["manaRegen"]["flat"]
+        self.base_armor: float = self.stats["armor"]["flat"]
+        self.base_magic_resistance: float = self.stats["magicResistance"]["flat"]
+        self.base_attack_damage: float = self.stats["attackDamage"]["flat"]
         # This is a percentage
-        self.base_attack_speed: float = self.stats["attackSpeed"]["flat"] * 1.0
-        self.base_movespeed: float = self.stats["movespeed"]["flat"] * 1.0
+        self.base_attack_speed: float = self.stats["attackSpeed"]["flat"]
+        self.base_movespeed: float = self.stats["movespeed"]["flat"]
 
-        self.health_per_level: float = self.stats["health"]["perLevel"] * 1.0
-        self.health_regen_per_level: float = self.stats["healthRegen"]["perLevel"] * 1.0
-        self.mana_per_level: float = self.stats["mana"]["perLevel"] * 1.0
-        self.mana_regen_per_level: float = self.stats["manaRegen"]["perLevel"] * 1.0
-        self.armor_per_level: float = self.stats["armor"]["perLevel"] * 1.0
-        self.magic_resistance_per_level: float = self.stats["magicResistance"]["perLevel"] * 1.0
-        self.attack_damage_per_level: float = self.stats["attackDamage"]["perLevel"] * 1.0
-        self.attack_speed_per_level: float = self.stats["attackSpeed"]["perLevel"] * 1.0
+        self.health_per_level: float = self.stats["health"]["perLevel"]
+        self.health_regen_per_level: float = self.stats["healthRegen"]["perLevel"]
+        self.mana_per_level: float = self.stats["mana"]["perLevel"]
+        self.mana_regen_per_level: float = self.stats["manaRegen"]["perLevel"]
+        self.armor_per_level: float = self.stats["armor"]["perLevel"]
+        self.magic_resistance_per_level: float = self.stats["magicResistance"]["perLevel"]
+        self.attack_damage_per_level: float = self.stats["attackDamage"]["perLevel"]
+        self.attack_speed_per_level: float = self.stats["attackSpeed"]["perLevel"]
 
         # self.champ_dict["stats"]["criticalStrikeDamage"]["flat"] not correct in the jsons
-        self.critical_strike_damage = 175.0
-        self.critical_strike_damage_modifier = self.stats["criticalStrikeDamageModifier"]["flat"] * 1.0
-        self.attack_speed_ratio = self.stats["attackSpeedRatio"]["flat"] * 1.0
-        self.gold_per_10 = 20.4
+        self.critical_strike_damage: float = 175.0
+        self.critical_strike_damage_modifier: float = self.stats[
+            "criticalStrikeDamageModifier"]["flat"]
+        self.attack_speed_ratio: float = self.stats["attackSpeedRatio"]["flat"]
+        self.gold_per_10: float = 20.4
 
-        self.health_points_based_on_level = 0.0
-        self.health_points_regen_based_on_level = 0.0
-        self.mana_based_on_level = 0.0
+        self.health_points_based_on_level: float = 0.0
+        self.health_points_regen_based_on_level: float = 0.0
+        self.mana_based_on_level: float = 0.0
         self.mana_regen_based_on_level = 0.0
-        self.armor_based_on_level = 0.0
-        self.magic_resistance_based_on_level = 0.0
-        self.attack_damage_based_on_level = 0.0
+        self.armor_based_on_level: float = 0.0
+        self.magic_resistance_based_on_level: float = 0.0
+        self.attack_damage_based_on_level: float = 0.0
 
-        self.bonus_health_points = 0.0
-        self.bonus_mana = 0.0
-        self.bonus_armor = 0.0
-        self.bonus_magic_resistance = 0.0
-        self.bonus_attack_damage = 0.0
-        self.bonus_attack_speed = 0.0
+        self.bonus_health_points: float = 0.0
+        self.bonus_mana: float = 0.0
+        self.bonus_armor: float = 0.0
+        self.bonus_magic_resistance: float = 0.0
+        self.bonus_attack_damage: float = 0.0
+        self.bonus_attack_speed: float = 0.0
 
-        self.total_health_points = 0.0
-        self.total_health_regen = 0.0
-        self.total_mana = 0.0
-        self.total_mana_regen = 0.0
-        self.total_armor = 0.0
-        self.total_attack_damage = 0.0
-        self.total_attack_speed = 0.0
-        self.total_magic_resistance = 0.0
-        self.total_armor_pen_percentage = 0.0
-        self.total_magic_pen_percentage = 0.0
-        self.total_tenacity = 0.0
-        self.total_slow_resistance = 0.0
+        self.total_health_points: float = 0.0
+        self.total_health_regen: float = 0.0
+        self.total_mana: float = 0.0
+        self.total_mana_regen: float = 0.0
+        self.total_armor: float = 0.0
+        self.total_attack_damage: float = 0.0
+        self.total_attack_speed: float = 0.0
+        self.total_magic_resistance: float = 0.0
+        self.total_armor_pen_percentage: float = 0.0
+        self.total_magic_pen_percentage: float = 0.0
+        self.total_tenacity: float = 0.0
+        self.total_slow_resistance: float = 0.0
 
-        self.total_critical_chance = 0.0
-        self.total_lethality_flat = 0.0
-        self.total_magic_pen_flat = 0.0
-        self.total_ability_power_flat = 0.0
-        self.total_ability_haste = 0.0
-        self.total_heal_and_shield_power = 0.0
-        self.total_life_steal = 0.0
-        self.total_physical_vamp = 0.0
-        self.total_omnivamp = 0.0
+        self.total_critical_chance: float = 0.0
+        self.total_lethality_flat: float = 0.0
+        self.total_magic_pen_flat: float = 0.0
+        self.total_ability_power_flat: float = 0.0
+        self.total_ability_haste: float = 0.0
+        self.total_heal_and_shield_power: float = 0.0
+        self.total_life_steal: float = 0.0
+        self.total_physical_vamp: float = 0.0
+        self.total_omnivamp: float = 0.0
 
         self.item_dict: dict = {
             "item1": None,
@@ -94,26 +96,37 @@ class Champion:
             "item6": None
         }
         self.has_mythic: bool = False
-        self.number_of_legendary_items = 0.0
-        self.has_steraks_gage = False
-        self.has_rabadons_deathcap = False
-        self.has_titanic_hydra = False
-        self.has_demonic_embrace = False
+        self.number_of_legendary_items: float = 0.0
+        self.has_steraks_gage: bool = False
+        self.has_rabadons_deathcap: bool = False
+        self.has_titanic_hydra: bool = False
+        self.has_demonic_embrace: bool = False
 
-        self.mythic_armor_pen_perc = 0.0
-        self.mythic_magic_pen_perc = 0.0
-        self.mythic_tenacity = 0.0
-        self.mythic_slow_resistance = 0.0
+        self.mythic_armor_pen_perc: float = 0.0
+        self.mythic_magic_pen_perc: float = 0.0
+        self.mythic_tenacity: float = 0.0
+        self.mythic_slow_resistance: float = 0.0
 
         self.q_bounds: Bounds = Bounds(0, 5)
         self.w_bounds: Bounds = Bounds(0, 5)
         self.e_bounds: Bounds = Bounds(0, 5)
         self.r_bounds: Bounds = Bounds(0, 3)
 
+        # Data for a damage amplification based on missing health, only needed by a couple of champions
+        self.missing_health_damage_amplifier = 0.0
+        self.per_missing_health_percentage = 0.0
+        self.missing_health_cap = 0.0
+
         self.q_name: str = self.champ_dict["abilities"]["Q"][0]["name"]
         self.w_name: str = self.champ_dict["abilities"]["W"][0]["name"]
         self.e_name: str = self.champ_dict["abilities"]["E"][0]["name"]
         self.r_name: str = self.champ_dict["abilities"]["R"][0]["name"]
+
+        self.scaling_stats_values = {
+            "AD": ScalingValue("AD", self.total_attack_damage),
+            "bonus AD": ScalingValue("bonus AD", self.bonus_attack_damage),
+            "AP": ScalingValue("AP", self.total_ability_power_flat)
+        }
 
         # A list of abilities that contains the static information about the ability
         self.ability_q: list[Ability] = get_abilities_data(
@@ -125,13 +138,19 @@ class Champion:
         self.ability_r: list[Ability] = get_abilities_data(
             "R", champ_dict, self.q_bounds)
 
+        self.add_scaling_stats_values_to_ability()
+
         self.enemy_health = 0.0
 
-        self.scaling_stats_values = {
-            "AD": ScalingValue("AD", self.total_attack_damage),
-            "bonus AD": ScalingValue("bonus AD", self.bonus_attack_damage),
-            "AP": ScalingValue("AP", self.total_ability_power_flat)
-        }
+    def add_scaling_stats_values_to_ability(self):
+        for i in range(len(self.ability_q)):
+            self.ability_q[i].set_scaling_values(self.scaling_stats_values)
+        for i in range(len(self.ability_w)):
+            self.ability_w[i].set_scaling_values(self.scaling_stats_values)
+        for i in range(len(self.ability_e)):
+            self.ability_e[i].set_scaling_values(self.scaling_stats_values)
+        for i in range(len(self.ability_r)):
+            self.ability_r[i].set_scaling_values(self.scaling_stats_values)
 
     def set_champion_level(self, current_level):
         self.champion_level = current_level
@@ -191,21 +210,24 @@ class Champion:
         self.set_scaling_values()
 
     def auto_attack(self):
-        return ["PHYSICAL_DAMAGE", self.total_attack_damage, None]
+        damage_type = "PHYSICAL_DAMAGE"
+        damage: Damage = Damage(damage_type)
+        damage.set_damage(self.total_attack_damage)
+        return damage
 
     def passive_ability(self):
         pass
 
-    def q_ability(self, skill_level=-1):
+    def q_action(self, skill_level=-1):
         pass
 
-    def w_ability(self, skill_level=-1):
+    def w_action(self, skill_level=-1):
         pass
 
-    def e_ability(self, skill_level=-1):
+    def e_action(self, skill_level=-1):
         pass
 
-    def r_ability(self, skill_level=-1):
+    def r_action(self, skill_level=-1):
         pass
 
     def get_missing_health(self, enemy_max_hp, enemy_current_hp):

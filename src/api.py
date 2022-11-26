@@ -3,13 +3,13 @@ from python_champions.index import list_of_champs
 from python_items.index import list_of_items
 from additemstochampions import update_champion
 
-app = Flask(__name__)
+app: Flask = Flask(__name__)
 
-posted_data = {}
+posted_data: dict = {}
 
 
 @app.route("/getInitData/<string:res>", methods=["GET"])
-def calcDat(res):
+def calcDat(res: str):
     if request.method == "GET":
         if res == "champs":
             return {"listOfChampions": list_of_champs}
@@ -20,7 +20,7 @@ def calcDat(res):
 @app.route("/sendData", methods=["POST"])
 def sendData():
     if request.method == "POST":
-        posted_data = request.get_json(force=True)
+        posted_data: dict = request.get_json(force=True)
         update_champion(posted_data)
         return posted_data
 
