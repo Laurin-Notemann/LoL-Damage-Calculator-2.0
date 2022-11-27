@@ -1,17 +1,32 @@
 class MissingHealthData:
     def __init__(self, enemy_total_health: float, enemy_current_hp: float, damage_amplifier: float, per_percentage_of_missing_health: float, missing_health_cap: float):
+        self.enemy_total_health: float = enemy_total_health
         self.enemy_missing_health: float = get_enemy_missing_health(
             enemy_total_health, enemy_current_hp)
         # divided by 1000 for a more precise calculation
-        self.damage_amplifier = damage_amplifier/2500
-        self.per_percentage_of_missing_health = per_percentage_of_missing_health/2500
+        self.damage_amplifier: float = damage_amplifier/2500
+        self.per_percentage_of_missing_health: float = per_percentage_of_missing_health/2500
         # a percentage that amplifies the damage dealt
-        self.damage_amplifier: float = get_amp_based_on_missing_health(
+        self.missing_health_cap: float = missing_health_cap
+        self.amplifier: float = get_amp_based_on_missing_health(
             self.enemy_missing_health, 
             self.damage_amplifier, 
             self.per_percentage_of_missing_health, 
-            missing_health_cap
+            self.missing_health_cap
         )
+    
+    def update_missing_health(self, enemy_current_hp: float):
+        self.enemy_missing_health = get_enemy_missing_health(
+            self.enemy_total_health, enemy_current_hp)
+        print(self.enemy_missing_health)
+        self.amplifier = get_amp_based_on_missing_health(
+            self.enemy_missing_health, 
+            self.damage_amplifier, 
+            self.per_percentage_of_missing_health, 
+            self.missing_health_cap
+        )
+        print(self.amplifier)
+        
 
 
 def get_enemy_missing_health(enemy_max_hp: float, enemy_current_hp: float):

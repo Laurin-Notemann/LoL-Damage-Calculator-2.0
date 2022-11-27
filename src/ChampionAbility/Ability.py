@@ -23,15 +23,15 @@ class Ability:
     def get_damage(self, skill_level: int, effect_number: int = 0, attribute_num: int = 0):
         damage = Damage(self.damage_type)
         damage.calc_damage(
-            self.effects[effect_number], 
-            self.scaling_values, 
+            self.effects[effect_number],
+            self.scaling_values,
             skill_level, attribute_num)
         return damage
 
     def get_damage_based_on_enemy_health(self, skill_level: int, missing_health: MissingHealthData, effect_number: int = 0, attribute_num: int = 0):
         damage = self.get_damage(skill_level, effect_number, attribute_num)
         temp = damage.damage
-        temp += temp * missing_health.damage_amplifier
+        temp += temp * missing_health.amplifier
         damage.set_damage(round(temp, 2))
         return damage
 
