@@ -51,7 +51,7 @@ def get_base_attribute(effect: Effect, attribute_num):
 def get_scaling_attributes(effect: Effect, attribute_num):
     scaling_values_dict = {}
     for attribute in effect.attributes[attribute_num]:
-        if attribute.unit != "" and attribute.unit[0][2:] != "":
+        if attribute.unit[0] != "" and attribute.unit[0][2:] != "":
             scaling_values_dict[attribute.unit[0][2:]] = attribute
     return scaling_values_dict
 
