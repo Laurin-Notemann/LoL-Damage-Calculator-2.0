@@ -1,4 +1,7 @@
 from Champion.Champion import Champion
+from ChampionAbility.Ability import Ability
+from ChampionAbility.Damage import Damage
+from ChampionAbility.DamageType import DamageType
 
 
 class Aatrox(Champion):
@@ -8,30 +11,33 @@ class Aatrox(Champion):
         self.has_passive = True
 
     def auto_attack(self):
+        damage_auto_attack: Damage = Damage(DamageType.PHYSICAL)
+        damage_auto_attack.set_damage(self.total_attack_damage)
         if self.has_passive:
-            return ["PHYSICAL_DAMAGE", self.total_attack_damage + self.passive_ability()[1], None]
+            passive_damage: Damage = self.passive_ability()
+            return [damage_auto_attack, passive_damage]
         else:
-            return ["PHYSICAL_DAMAGE", self.total_attack_damage, None]
+            return damage_auto_attack
 
     def passive_ability(self):
-        damage_type = "PHYSICAL_DAMAGE"
-
+        damage: Damage = Damage(DamageType.PHYSICAL)
         perc_amp = 0.0459
-
         for i in range(1, 19):
+            # 0.0041 is a specfic amount provided by league of legends
             perc_amp += 0.0041
             if self.champion_level == i:
-                return [damage_type, perc_amp * self.enemy_health, None]
+                damage.set_damage(perc_amp*self.enemy_health)
+                return damage
 
     def q_action(self, skill_level=-1, is_sweet_spot=False, time_casted=0):
         key = "Q"
-
+        q = self.ability_q[0]
         if skill_level > -1:
             for i in range(0, 3):
                 if i == time_casted:
                     if is_sweet_spot:
-                        return self.wrapper_for_dmg(key, skill_level, i + 2, 1, "AD")
-                    return self.wrapper_for_dmg(key, skill_level, i + 2, 0, "AD")
+                        return q.get_damage(skill_level, i+2, 1)
+                    return q.get_damage(skill_level, i+2, 0)
 
     def w_action(self, skill_level=-1, tether_completed=True):
         key = "W"

@@ -19,12 +19,12 @@ class Ability:
     def set_scaling_values(self, scaling_stats_values: dict[str:ScalingValue]):
         self.scaling_values = scaling_stats_values
 
-    def get_damage(self, skill_level: int, effect_number: int):
+    def get_damage(self, skill_level: int, effect_number: int, attribute_num: int = 0):
         damage = Damage(self.damage_type)
         damage.calc_damage(
             self.effects[effect_number], 
             self.scaling_values, 
-            skill_level)
+            skill_level, attribute_num)
         return damage
 
     def get_damage_based_on_enemy_health(self, skill_level: int, effect_number: int, missing_health: MissingHealthData):

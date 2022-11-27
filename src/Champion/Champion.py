@@ -229,6 +229,11 @@ class Champion:
 
     def r_action(self, skill_level=-1):
         pass
+    
+    def skill_level_inside_bounds(self, skill_level: int, ability: Ability):
+        if ability.bounds.lower <= skill_level <= ability.bounds.upper:
+            return True
+        return False
 
     def get_missing_health(self, enemy_max_hp, enemy_current_hp):
         return round((enemy_max_hp - enemy_current_hp) / enemy_max_hp, 6)
