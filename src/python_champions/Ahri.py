@@ -1,51 +1,49 @@
 from Champion.Champion import Champion
+from ChampionAbility.Ability import Ability
+from ChampionAbility.Damage import Damage
 
 
 class Ahri(Champion):
     def __init__(self, champ_dict):
         super().__init__(champ_dict)
-        # self.total_ability_power_flat = 0
 
     def passive_ability(self):
         pass
 
-    def q_action(self, skill_level=-1, first_pass=True, last_pass=True):
-        key = "Q"
-
-        if skill_level > -1:
+    def q_action(self, skill_level: int=-1, first_pass: bool=True, last_pass: bool=True):
+        q: Ability = self.ability_q[0]
+        if self.skill_level_inside_bounds(skill_level, q):
+            damage_first_pass: Damage = q.get_damage(skill_level, 0)
+            damage_second_pass: Damage = q.get_damage(skill_level, 0)
             if first_pass and last_pass:
-                return ["MIXED_DAMAGE",
-                        ["MAGIC_DAMAGE", self.wrapper_for_dmg(
-                            key, skill_level, 0, 0, "AP")[1]],
-                        ["TRUE_DAMAGE", self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1]]]
+                return [damage_first_pass, damage_second_pass]
             elif first_pass:
-                return ["MAGIC_DAMAGE", self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1], None]
+                return damage_first_pass
             elif last_pass:
-                return ["TRUE_DAMAGE", self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1], None]
+                return damage_second_pass
 
-    def w_action(self, skill_level=-1, amount_hit=3):
-        key = "W"
-
-        if skill_level > -1:
+    def w_action(self, skill_level: int=-1, amount_hit: int=3):
+        w: Ability = self.ability_w[0]
+        if self.skill_level_inside_bounds(skill_level, w):
+            first_hit: Damage = w.get_damage(skill_level, 1)
+            subsequent_hit: Damage = w.get_damage(skill_level, 2)
             if amount_hit == 1:
-                return self.wrapper_for_dmg(key, skill_level, 1, 0, "AP")
+                return first_hit
             elif amount_hit == 2:
-                first_hit = self.wrapper_for_dmg(
-                    key, skill_level, 1, 0, "AP")[1]
-                second_hit = self.wrapper_for_dmg(
-                    key, skill_level, 2, 0, "AP")[1]
-                return ["MAGIC_DAMAGE", first_hit + second_hit, None]
+                return [first_hit, subsequent_hit]
             elif amount_hit == 3:
-                return self.wrapper_for_dmg(key, skill_level, 2, 1, "AP")
+                return [first_hit, subsequent_hit, subsequent_hit]
 
-    def e_action(self, skill_level=-1):
-        key = "E"
+    def e_action(self, skill_level: int=-1):
+        e: Ability = self.ability_e[0]
+        if self.skill_level_inside_bounds[skill_level, e]:
+            return e.get_damage(skill_level, 0)
 
-        if skill_level > -1:
-            return self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")
-
-    def r_action(self, skill_level=-1, amount_used=1):
-        key = "R"
-
-        if skill_level > -1:
-            return [self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[0], self.wrapper_for_dmg(key, skill_level, 0, 0, "AP")[1] * amount_used, None]
+    def r_action(self, skill_level: int=-1, amount_used: int=1):
+        r: Ability = self.ability_r[0]
+        if self.skill_level_inside_bounds(skill_level, r):
+            r_damage: Damage = r.get_damage(skill_level, 0)
+            list_of_amount_of_r: list[Damage]= []
+            for i in range(amount_used):
+                list_of_amount_of_r.append(r_damage)
+            return list_of_amount_of_r
