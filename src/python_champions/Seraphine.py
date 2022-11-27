@@ -2,6 +2,7 @@ from Champion.Champion import Champion
 from ChampionAbility.ScalingValue import ScalingValue
 from ChampionAbility.MissingHealthData import MissingHealthData
 from ChampionAbility.Damage import Damage
+from ChampionAbility.Ability import Ability
 from ChampionAbility.DamageType import DamageType
 
 
@@ -44,7 +45,7 @@ class Seraphine(Champion):
         if self.note_stacks == 0:
             return damage_auto_attack
         else:
-            damage_passive = self.passive_ability()
+            damage_passive: Damage = self.passive_ability()
             return [damage_auto_attack, damage_passive]
 
     # returns value of the additional damage (only works for the notes she creates by herself so max is 4 currently)
@@ -53,7 +54,6 @@ class Seraphine(Champion):
         damage: Damage = Damage(DamageType.MAGIC)
 
         if self.note_stacks > 4:
-
             self.note_stacks = 4
 
         if self.champion_level < 6:
@@ -65,12 +65,13 @@ class Seraphine(Champion):
         elif self.champion_level < 19:
             damage.set_damage(round((24 + scaled_damage) * self.note_stacks, 2))
 
+        # gets set to 0 because after being used all stacks are consumed
         self.note_stacks = 0
         return damage
 
     def q_action(self, enemy_current_hp: float = 0, skill_level: int = -1):
-        q = self.ability_q[0]
-        if q.bounds.lower <= skill_level < q.bounds.upper:
+        q: Ability = self.ability_q[0]
+        if self.skill_level_inside_bounds(skill_level, q):
             self.increase_note_stacks()
             missing_health = MissingHealthData(
                 self.enemy_health,
@@ -85,14 +86,14 @@ class Seraphine(Champion):
         return None
 
     def e_action(self, skill_level=-1):
-        e = self.ability_e[0]
-        if e.bounds.lower <= skill_level < e.bounds.upper:
+        e: Ability = self.ability_e[0]
+        if self.skill_level_inside_bounds(skill_level, e):
             self.increase_note_stacks()
             return e.get_damage(skill_level, 0)
 
     def r_action(self, skill_level=-1):
-        r = self.ability_r[0]
-        if r.bounds.lower <= skill_level < r.bounds.upper:
+        r: Ability = self.ability_r[0]
+        if self.skill_level_inside_bounds(skill_level, r):
             self.increase_note_stacks()
             return r.get_damage(skill_level, 0)
 
