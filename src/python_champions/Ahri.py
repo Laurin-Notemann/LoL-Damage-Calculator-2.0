@@ -7,10 +7,10 @@ class Ahri(Champion):
     def __init__(self, champ_dict):
         super().__init__(champ_dict)
 
-    def passive_ability(self):
+    def passive_action(self):
         pass
 
-    def q_action(self, skill_level: int=-1, first_pass: bool=True, last_pass: bool=True):
+    def q_action(self, skill_level: int = -1, first_pass: bool = True, last_pass: bool = True):
         q: Ability = self.ability_q[0]
         if self.skill_level_inside_bounds(skill_level, q):
             damage_first_pass: Damage = q.get_damage(skill_level, 0)
@@ -22,7 +22,7 @@ class Ahri(Champion):
             elif last_pass:
                 return damage_second_pass
 
-    def w_action(self, skill_level: int=-1, amount_hit: int=3):
+    def w_action(self, skill_level: int = -1, amount_hit: int = 3):
         w: Ability = self.ability_w[0]
         if self.skill_level_inside_bounds(skill_level, w):
             first_hit: Damage = w.get_damage(skill_level, 1)
@@ -34,16 +34,16 @@ class Ahri(Champion):
             elif amount_hit == 3:
                 return [first_hit, subsequent_hit, subsequent_hit]
 
-    def e_action(self, skill_level: int=-1):
+    def e_action(self, skill_level: int = -1):
         e: Ability = self.ability_e[0]
         if self.skill_level_inside_bounds[skill_level, e]:
             return e.get_damage(skill_level, 0)
 
-    def r_action(self, skill_level: int=-1, amount_used: int=1):
+    def r_action(self, skill_level: int = -1, amount_used: int = 1):
         r: Ability = self.ability_r[0]
         if self.skill_level_inside_bounds(skill_level, r):
             r_damage: Damage = r.get_damage(skill_level, 0)
-            list_of_amount_of_r: list[Damage]= []
+            list_of_amount_of_r: list[Damage] = []
             for i in range(amount_used):
                 list_of_amount_of_r.append(r_damage)
             return list_of_amount_of_r

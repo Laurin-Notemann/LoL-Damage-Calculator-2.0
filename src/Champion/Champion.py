@@ -106,7 +106,7 @@ class Champion:
         self.mythic_magic_pen_perc: float = 0.0
         self.mythic_tenacity: float = 0.0
         self.mythic_slow_resistance: float = 0.0
-        
+
         # Bounds goes from 0 to 4 because values from json index start with 0
         self.q_bounds: Bounds = Bounds(0, 4)
         self.w_bounds: Bounds = Bounds(0, 4)
@@ -216,7 +216,7 @@ class Champion:
         damage.set_damage(self.total_attack_damage)
         return damage
 
-    def passive_ability(self):
+    def passive_action(self):
         pass
 
     def q_action(self, skill_level=-1):
@@ -230,7 +230,7 @@ class Champion:
 
     def r_action(self, skill_level=-1):
         pass
-    
+
     def skill_level_inside_bounds(self, skill_level: int, ability: Ability):
         if ability.bounds.lower <= skill_level < ability.bounds.upper:
             return True

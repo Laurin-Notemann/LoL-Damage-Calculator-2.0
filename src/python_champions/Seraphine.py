@@ -45,11 +45,11 @@ class Seraphine(Champion):
         if self.note_stacks == 0:
             return damage_auto_attack
         else:
-            damage_passive: Damage = self.passive_ability()
+            damage_passive: Damage = self.passive_action()
             return [damage_auto_attack, damage_passive]
 
     # returns value of the additional damage (only works for the notes she creates by herself so max is 4 currently)
-    def passive_ability(self):
+    def passive_action(self):
         scaled_damage: float = self.total_ability_power_flat * 0.07
         damage: Damage = Damage(DamageType.MAGIC)
 
@@ -61,9 +61,11 @@ class Seraphine(Champion):
         elif self.champion_level < 11:
             damage.set_damage(round((8 + scaled_damage) * self.note_stacks, 2))
         elif self.champion_level < 16:
-            damage.set_damage(round((14 + scaled_damage) * self.note_stacks, 2))
+            damage.set_damage(
+                round((14 + scaled_damage) * self.note_stacks, 2))
         elif self.champion_level < 19:
-            damage.set_damage(round((24 + scaled_damage) * self.note_stacks, 2))
+            damage.set_damage(
+                round((24 + scaled_damage) * self.note_stacks, 2))
 
         # gets set to 0 because after being used all stacks are consumed
         self.note_stacks = 0
@@ -73,7 +75,7 @@ class Seraphine(Champion):
         q: Ability = self.ability_q[0]
         if self.skill_level_inside_bounds(skill_level, q):
             self.increase_note_stacks()
-            missing_health = MissingHealthData(
+            missing_health: MissingHealthData = MissingHealthData(
                 self.enemy_health,
                 enemy_current_hp,
                 self.missing_health_damage_amplifier,
