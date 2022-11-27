@@ -106,11 +106,12 @@ class Champion:
         self.mythic_magic_pen_perc: float = 0.0
         self.mythic_tenacity: float = 0.0
         self.mythic_slow_resistance: float = 0.0
-
-        self.q_bounds: Bounds = Bounds(0, 5)
-        self.w_bounds: Bounds = Bounds(0, 5)
-        self.e_bounds: Bounds = Bounds(0, 5)
-        self.r_bounds: Bounds = Bounds(0, 3)
+        
+        # Bounds goes from 0 to 4 because values from json index start with 0
+        self.q_bounds: Bounds = Bounds(0, 4)
+        self.w_bounds: Bounds = Bounds(0, 4)
+        self.e_bounds: Bounds = Bounds(0, 4)
+        self.r_bounds: Bounds = Bounds(0, 4)
 
         # Data for a damage amplification based on missing health, only needed by a couple of champions
         self.missing_health_damage_amplifier = 0.0
@@ -231,7 +232,7 @@ class Champion:
         pass
     
     def skill_level_inside_bounds(self, skill_level: int, ability: Ability):
-        if ability.bounds.lower <= skill_level <= ability.bounds.upper:
+        if ability.bounds.lower <= skill_level < ability.bounds.upper:
             return True
         return False
 
