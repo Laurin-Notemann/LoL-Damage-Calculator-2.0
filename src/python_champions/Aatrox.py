@@ -21,7 +21,9 @@ class Aatrox(Champion):
 
     def passive_ability(self):
         damage: Damage = Damage(DamageType.PHYSICAL)
+
         perc_amp = 0.0459
+        # for loop goes through all the levels 1-18
         for i in range(1, 19):
             # 0.0041 is a specfic amount provided by league of legends
             perc_amp += 0.0041
@@ -30,35 +32,33 @@ class Aatrox(Champion):
                 return damage
 
     def q_action(self, skill_level=-1, is_sweet_spot=False, time_casted=0):
-        key = "Q"
         q = self.ability_q[0]
-        if skill_level > -1:
+        if self.skill_level_inside_bounds(skill_level, q):
+            # Aatrox has three different cast, that all deal different amount of damage the loop goes through all three
             for i in range(0, 3):
                 if i == time_casted:
                     if is_sweet_spot:
-                        return q.get_damage(skill_level, i+2, 1)
-                    return q.get_damage(skill_level, i+2, 0)
+                        return q.get_damage(skill_level, i + 2, 1)
+                    return q.get_damage(skill_level, i + 2, 0)
 
     def w_action(self, skill_level=-1, tether_completed=True):
-        key = "W"
-        if skill_level > -1:
+        w = self.ability_w[0]
+        if self.skill_level_inside_bounds(skill_level, w):
             if tether_completed:
-                return self.wrapper_for_dmg(key, skill_level, 2, 0, "AD")
-            return self.wrapper_for_dmg(key, skill_level, 0, 0, "AD")
+                return w.get_damage(skill_level, 2)
+            return w.get_damage(skill_level, 0)
 
     def e_action(self, skill_level=-1):
         return None
 
     def r_action(self, skill_level=-1):
-        key = "R"
-        ability_value_dict = self.get_ability_values(key)[key][0]
-
-        if skill_level > -1:
-            self.bonus_attack_damage += self.total_attack_damage * \
-                (1 + (ability_value_dict["effect2"]
-                 ["attribute0"][0][0][skill_level] / 100))
+        r = self.ability_r[0]
+        if self.skill_level_inside_bounds(skill_level, r):
+            r_ad = r.effects[0].attributes[0][0].values[skill_level]
+            bonus_ad_from_r = self.total_attack_damage * (1 + (r_ad / 100))
+            self.bonus_attack_damage += bonus_ad_from_r
             # needs to be called everytime bonus AD changes
-            self.set_base_stats_based_on_level()
+            self.set_total_value_to_based_on_level_and_item_stats()
 
     def __getstate__(self):
         state = self.__dict__.copy()
