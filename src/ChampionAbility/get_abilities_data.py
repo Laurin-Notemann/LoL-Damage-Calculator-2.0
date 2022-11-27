@@ -38,8 +38,8 @@ def get_ability_effects(list_of_effect_dicts: list):
         curr_dict = list_of_effect_dicts[effect_number]
 
         temp_effect = Effect(get_effect_attributes(curr_dict["leveling"]))
-        if temp_effect.attributes:
-            effects_list.append(temp_effect)
+        
+        effects_list.append(temp_effect)
 
     return effects_list
 
