@@ -14,6 +14,9 @@ class Damage:
     def set_damage(self, damage: float):
         self.damage = damage
 
+    def set_damage_type(self, damage_type: str):
+        self.damage_type = damage_type
+    
     def calc_damage(self, effect: Effect, scaling_values: dict[str:ScalingValue], skill_level: int, attribute_num: int = 0) -> None:
         """
         The damage value in the end depends on multiple different factors but almost every ability has a basic_damage_value,
@@ -32,10 +35,9 @@ class Damage:
                                                             scaling_dmg_attributes_dict
                                                             )
         total_damage: float = basic_damage_value
-
         for value in scaled_damage_values:
             total_damage += value
-        self.set_damage(total_damage)
+        self.set_damage(round(total_damage, 2))
 
 
 def get_flat_value(skill_level: int, attribute: Attribute):
