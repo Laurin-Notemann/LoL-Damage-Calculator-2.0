@@ -1,6 +1,7 @@
 from Champion.Champion import Champion
 from ChampionAbility.Ability import Ability
 from ChampionAbility.Damage import Damage
+from ChampionAbility.DamageType import DamageType
 
 
 class Ahri(Champion):
@@ -14,7 +15,9 @@ class Ahri(Champion):
         q: Ability = self.ability_q[0]
         if self.skill_level_inside_bounds(skill_level, q):
             damage_first_pass: Damage = q.get_damage(skill_level)
+            damage_first_pass.set_damage_type(DamageType.MAGIC.value)
             damage_second_pass: Damage = q.get_damage(skill_level)
+            damage_second_pass.set_damage_type(DamageType.TRUE.value)
             if first_pass and last_pass:
                 return [damage_first_pass, damage_second_pass]
             elif first_pass:
@@ -36,7 +39,7 @@ class Ahri(Champion):
 
     def e_action(self, skill_level: int = -1):
         e: Ability = self.ability_e[0]
-        if self.skill_level_inside_bounds[skill_level, e]:
+        if self.skill_level_inside_bounds(skill_level, e):
             return e.get_damage(skill_level)
 
     def r_action(self, skill_level: int = -1, amount_used: int = 1):
