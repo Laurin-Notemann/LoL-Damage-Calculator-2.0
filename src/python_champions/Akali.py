@@ -18,7 +18,7 @@ class Akali(Champion):
         self.has_assassins_mark = True
 
     def auto_attack(self):
-        damage_auto_attack: Damage = Damage(DamageType.PHYSICAL)
+        damage_auto_attack: Damage = Damage(DamageType.PHYSICAL.value)
         damage_auto_attack.set_damage(self.total_attack_damage)
         if self.has_assassins_mark:
             damage_passive: Damage = self.passive_action()
@@ -28,7 +28,7 @@ class Akali(Champion):
             return damage_auto_attack
 
     def passive_action(self):
-        damage: Damage = Damage(DamageType.MAGIC)
+        damage: Damage = Damage(DamageType.MAGIC.value)
         ad_amp: float = self.bonus_attack_damage * 0.6
         ap_amp: float = self.total_ability_power_flat * 0.55
         passive_base_damage: float = 35
@@ -69,18 +69,23 @@ class Akali(Champion):
             self.set_assissins_mark_true()
 
             missing_health: MissingHealthData = MissingHealthData(
-                self.enemy_health, 
-                enemy_current_hp, 
-                self.missing_health_damage_amplifier, 
-                self.per_missing_health_percentage, 
+                self.enemy_health,
+                enemy_current_hp,
+                self.missing_health_damage_amplifier,
+                self.per_missing_health_percentage,
                 self.missing_health_cap
             )
-
+            print(missing_health.amplifier)
             damage_first_r: Damage = r.get_damage(skill_level)
-            damage_second_r: Damage = r.get_damage_based_on_enemy_health(skill_level, missing_health, 2)
-            damage_total: list[Damage] = [damage_first_r, damage_second_r]
+            damage_second_r: Damage = r.get_damage_based_on_enemy_health(
+                skill_level, missing_health, 2)
 
             if first_instance and second_instance:
+                enemy_current_hp -= damage_first_r.damage
+                missing_health.update_missing_health(enemy_current_hp)
+                damage_second_r = r.get_damage_based_on_enemy_health(
+                    skill_level, missing_health, 2)
+                damage_total: list[Damage] = [damage_first_r, damage_second_r]
                 return damage_total
             elif first_instance:
                 return damage_first_r
