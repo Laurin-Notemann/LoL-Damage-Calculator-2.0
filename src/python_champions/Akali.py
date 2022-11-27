@@ -48,7 +48,7 @@ class Akali(Champion):
         q: Ability = self.ability_q[0]
         if self.skill_level_inside_bounds(skill_level, q):
             self.set_assissins_mark_true()
-            return q.get_damage(skill_level, 0)
+            return q.get_damage(skill_level)
 
     def w_action(self, skill_level: int = -1):
         return None
@@ -60,7 +60,7 @@ class Akali(Champion):
             self.set_assissins_mark_true()
             if second_instance:
                 return e.get_damage(skill_level, 2, 1)
-            return e.get_damage(skill_level, 0)
+            return e.get_damage(skill_level)
 
     def r_action(self, skill_level: int = -1, enemy_current_hp: float = 0, first_instance: bool = True, second_instance: bool = True):
         r: Ability = self.ability_r[0]
@@ -76,8 +76,8 @@ class Akali(Champion):
                 self.missing_health_cap
             )
 
-            damage_first_r: Damage = r.get_damage(skill_level, 0)
-            damage_second_r: Damage = r.get_damage_based_on_enemy_health(skill_level, 2, missing_health)
+            damage_first_r: Damage = r.get_damage(skill_level)
+            damage_second_r: Damage = r.get_damage_based_on_enemy_health(skill_level, missing_health, 2)
             damage_total: list[Damage] = [damage_first_r, damage_second_r]
 
             if first_instance and second_instance:

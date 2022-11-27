@@ -19,7 +19,8 @@ class Ability:
     def set_scaling_values(self, scaling_stats_values: dict[str:ScalingValue]):
         self.scaling_values = scaling_stats_values
 
-    def get_damage(self, skill_level: int, effect_number: int, attribute_num: int = 0):
+    # effect_number and attribute_num default 0 because most abilites use the first effect and first attribute
+    def get_damage(self, skill_level: int, effect_number: int = 0, attribute_num: int = 0):
         damage = Damage(self.damage_type)
         damage.calc_damage(
             self.effects[effect_number], 
@@ -27,8 +28,8 @@ class Ability:
             skill_level, attribute_num)
         return damage
 
-    def get_damage_based_on_enemy_health(self, skill_level: int, effect_number: int, missing_health: MissingHealthData):
-        damage = self.get_damage(skill_level, effect_number)
+    def get_damage_based_on_enemy_health(self, skill_level: int, missing_health: MissingHealthData, effect_number: int = 0, attribute_num: int = 0):
+        damage = self.get_damage(skill_level, effect_number, attribute_num)
         temp = damage.damage
         temp += temp * missing_health.damage_amplifier
         damage.set_damage(round(temp, 2))

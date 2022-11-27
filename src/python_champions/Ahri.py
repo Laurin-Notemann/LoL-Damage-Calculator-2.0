@@ -13,8 +13,8 @@ class Ahri(Champion):
     def q_action(self, skill_level: int = -1, first_pass: bool = True, last_pass: bool = True):
         q: Ability = self.ability_q[0]
         if self.skill_level_inside_bounds(skill_level, q):
-            damage_first_pass: Damage = q.get_damage(skill_level, 0)
-            damage_second_pass: Damage = q.get_damage(skill_level, 0)
+            damage_first_pass: Damage = q.get_damage(skill_level)
+            damage_second_pass: Damage = q.get_damage(skill_level)
             if first_pass and last_pass:
                 return [damage_first_pass, damage_second_pass]
             elif first_pass:
@@ -37,12 +37,12 @@ class Ahri(Champion):
     def e_action(self, skill_level: int = -1):
         e: Ability = self.ability_e[0]
         if self.skill_level_inside_bounds[skill_level, e]:
-            return e.get_damage(skill_level, 0)
+            return e.get_damage(skill_level)
 
     def r_action(self, skill_level: int = -1, amount_used: int = 1):
         r: Ability = self.ability_r[0]
         if self.skill_level_inside_bounds(skill_level, r):
-            r_damage: Damage = r.get_damage(skill_level, 0)
+            r_damage: Damage = r.get_damage(skill_level)
             list_of_amount_of_r: list[Damage] = []
             for i in range(amount_used):
                 list_of_amount_of_r.append(r_damage)

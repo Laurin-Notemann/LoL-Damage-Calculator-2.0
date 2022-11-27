@@ -46,7 +46,7 @@ class Aatrox(Champion):
         if self.skill_level_inside_bounds(skill_level, w):
             if tether_completed:
                 return w.get_damage(skill_level, 2)
-            return w.get_damage(skill_level, 0)
+            return w.get_damage(skill_level)
 
     def e_action(self, skill_level: int = -1):
         return None

@@ -82,7 +82,7 @@ class Seraphine(Champion):
                 self.per_missing_health_percentage,
                 self.missing_health_cap
             )
-            return q.get_damage_based_on_enemy_health(skill_level, 0, missing_health)
+            return q.get_damage_based_on_enemy_health(skill_level, missing_health)
 
     def w_action(self, skill_level=-1):
         return None
@@ -91,13 +91,13 @@ class Seraphine(Champion):
         e: Ability = self.ability_e[0]
         if self.skill_level_inside_bounds(skill_level, e):
             self.increase_note_stacks()
-            return e.get_damage(skill_level, 0)
+            return e.get_damage(skill_level)
 
     def r_action(self, skill_level=-1):
         r: Ability = self.ability_r[0]
         if self.skill_level_inside_bounds(skill_level, r):
             self.increase_note_stacks()
-            return r.get_damage(skill_level, 0)
+            return r.get_damage(skill_level)
 
     def __getstate__(self):
         state = self.__dict__.copy()
