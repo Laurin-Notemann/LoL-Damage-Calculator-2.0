@@ -31,7 +31,7 @@ class Seraphine(Champion):
         return False
 
     def auto_attack(self):
-        damage_auto_attack: Damage = Damage(DamageType.PHYSICAL)
+        damage_auto_attack: Damage = Damage(DamageType.PHYSICAL.value)
         damage_auto_attack.set_damage(self.total_attack_damage)
         if self.note_stacks == 0:
             return damage_auto_attack
@@ -42,7 +42,7 @@ class Seraphine(Champion):
     # returns value of the additional damage (only works for the notes she creates by herself so max is 4 currently)
     def passive_action(self):
         scaled_damage: float = self.total_ability_power_flat * 0.07
-        damage: Damage = Damage(DamageType.MAGIC)
+        damage: Damage = Damage(DamageType.MAGIC.value)
 
         if self.note_stacks > 4:
             self.note_stacks = 4
