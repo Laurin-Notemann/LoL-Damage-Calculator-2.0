@@ -20,16 +20,7 @@ class Seraphine(Champion):
         self.missing_health_damage_amplifier: float = 0.05
         self.per_missing_health_percentage: float = 0.075
         self.missing_health_cap: float = 0.75
-        # follwing to statements only test purpose
-        self.total_ability_power_flat: float = 100
-        self.enemy_health = 1000
-        self.total_attack_damage = 55
-        self.scaling_stats_values: dict[str:ScalingValue] = {
-            "AD": ScalingValue("AD", self.total_attack_damage),
-            "bonus AD": ScalingValue("bonus AD", self.bonus_attack_damage),
-            "AP": ScalingValue("AP", self.total_ability_power_flat)
-        }
-        self.add_scaling_stats_values_to_ability()
+        
 
     def increase_note_stacks(self):
         self.note_stacks += 1
