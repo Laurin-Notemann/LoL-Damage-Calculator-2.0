@@ -138,4 +138,3 @@ print(t[2:])
 
 a = []
 print(len(a))
-

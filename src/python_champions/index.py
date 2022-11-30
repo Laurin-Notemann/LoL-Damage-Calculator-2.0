@@ -5,7 +5,7 @@ from python_champions.Seraphine import Seraphine
 from get_dict import get_json_champ
 from jsonpickle import encode, decode
 
-# Initialise ALL available champions 
+# Initialise ALL available champions
 aatrox = Aatrox(get_json_champ("Aatrox"))
 ahri = Ahri(get_json_champ("Ahri"))
 akali = Akali(get_json_champ("Akali"))
@@ -21,7 +21,3 @@ akali = decode(encode(akali, unpicklable=False))
 seraphine = decode(encode(seraphine, unpicklable=False))
 
 list_of_champs = [aatrox, ahri, akali, seraphine]
-
-
-
-

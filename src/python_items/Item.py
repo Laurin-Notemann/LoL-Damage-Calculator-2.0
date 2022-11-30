@@ -1,21 +1,23 @@
 class Item:
     def __init__(self, item_dict):
         self.item_dict: dict = item_dict
-        self.stats: dict = item_dict["stats"] # for clarity 
+        self.stats: dict = item_dict["stats"]  # for clarity
 
         self.item_id: int = self.item_dict["id"]
         self.item_name: str = self.item_dict["name"]
         self.item_icon: str = self.item_dict["icon"]
 
         self.item_tier: int = self.item_dict["tier"]
-        self.is_legendary: bool = False # default False, will be changed to True inside the respctive item if it is a legendary item
-        self.is_mythic: bool = False # default False, will be changed to True inside the respctive item if it is a mythic item
+        # default False, will be changed to True inside the respctive item if it is a legendary item
+        self.is_legendary: bool = False
+        # default False, will be changed to True inside the respctive item if it is a mythic item
+        self.is_mythic: bool = False
 
         self.item_builds_from: list[int] = self.item_dict["buildsFrom"]
         self.item_builds_into: list[int] = self.item_dict["buildsInto"]
 
         self.item_no_effects: bool = self.item_dict["noEffects"]
-        self.item_passives:list[dict] = self.item_dict["passives"]
+        self.item_passives: list[dict] = self.item_dict["passives"]
         self.item_actives: list[dict] = self.item_dict["active"]
 
         self.item_shop_price_total: int = self.item_dict["shop"]["prices"]["total"]
@@ -28,7 +30,8 @@ class Item:
         self.item_armor_penetration_percentage: float = self.stats["armorPenetration"]["percent"]
         self.item_attack_damage_flat: float = self.stats["attackDamage"]["flat"]
         self.item_attack_speed_flat: float = self.stats["attackSpeed"]["flat"]
-        self.item_critical_strike_chance_percentage: float = self.stats["criticalStrikeChance"]["percent"]
+        self.item_critical_strike_chance_percentage: float = self.stats[
+            "criticalStrikeChance"]["percent"]
         self.item_gold_per_10_flat: float = self.stats["goldPer_10"]["flat"]
         self.item_heal_and_shield_power_flat: float = self.stats["healAndShieldPower"]["percent"]
         self.item_health_flat: float = self.stats["health"]["flat"]
@@ -59,24 +62,24 @@ class Item:
         self.mythic_magic_penetration_percentage: float = 0
         self.mythic_magic_resistance_flat: float = 0
         # Movespeed for now irrelevant just a difficult calc for no reason lol
-        # self.mythic_movespeed_flat = 0 
+        # self.mythic_movespeed_flat = 0
         # self.mythic_movespeed_perc = 0
         self.mythic_ability_haste_flat: float = 0
         self.mythic_omnivamp_flat_percentage: float = 0
         self.mythic_tenacity_flat: float = 0
-        self.mythic_slow_resistance: float = 0 # this has to be defined in the corresponing item (sunfire aegis)
+        # this has to be defined in the corresponing item (sunfire aegis)
+        self.mythic_slow_resistance: float = 0
 
         self.has_active: bool = False
         self.is_unique: bool = False
 
         # Mythic item stats
-        
 
     def set_mythic_stats(self):
         if self.item_no_effects == False and not self.item_passives:
             for item in self.item_passives:
                 if item["mythic"]:
-                    stats = item["stats"] # for clarity
+                    stats = item["stats"]  # for clarity
                     self.mythic_armor_flat = stats["armor"]["flat"]
                     self.mythic_armor_penetration_percentage = stats["armorPenetration"]["percent"]
                     self.mythic_ability_power_flat = stats["abilityPower"]["flat"]
@@ -93,7 +96,7 @@ class Item:
                     self.mythic_ability_haste_flat = stats["abilityHaste"]["flat"]
                     self.mythic_omnivamp_flat_percentage = stats["omnivamp"]["percent"]
                     self.mythic_tenacity_flat = stats["omnivamp"]["flat"]
-                    
+
     def item_active_dmg(self):
         pass
 

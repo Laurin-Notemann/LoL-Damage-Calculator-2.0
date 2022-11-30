@@ -1,4 +1,3 @@
-import json
 from ChampionAbility.Attribute import Attribute
 from ChampionAbility.Effect import Effect
 from ChampionAbility.Ability import Ability
@@ -15,7 +14,7 @@ def get_abilities_data(key: str, champ_dict: dict, bounds: Bounds):
 
     list_of_ability_dicts = champ_dict["abilities"][key]
     ability_list: list[Ability] = []
-    
+
     for ability_number in range(len(list_of_ability_dicts)):
         curr_dict = list_of_ability_dicts[ability_number]
 
@@ -38,7 +37,7 @@ def get_ability_effects(list_of_effect_dicts: list):
         curr_dict = list_of_effect_dicts[effect_number]
 
         temp_effect = Effect(get_effect_attributes(curr_dict["leveling"]))
-        
+
         effects_list.append(temp_effect)
 
     return effects_list
@@ -74,14 +73,3 @@ def get_ability_costs(cost_list: list):
 def get_ability_cooldowns(cooldown_list: list):
     if cooldown_list is not None:
         return cooldown_list[0]["values"]
-"""
-
-test = ""
-with open(f"Aatrox.json", "r") as read_file:
-    test = json.load(read_file)
-
-test_list: list[Ability] = get_abilities_data("Q", test, Bounds(0, 5))
-
-# print(test_list[0].effects[0].attributes[0][0].values)
-
-print(test_list[0].effects[0].attributes[3].values)"""

@@ -6,7 +6,7 @@ from python_champions.Akali import Akali
 from Damage.ScalingValue import ScalingValue
 import json
 
-sera_dict= ""
+sera_dict = ""
 with open(f"/Users/laurin/Documents/PycharmProjects/Playground/LolJsons/current_champions_json/Seraphine.json", "r") as read_file:
     sera_dict = json.load(read_file)
 aatrox_dict = ""
@@ -18,8 +18,8 @@ with open(f"/Users/laurin/Documents/PycharmProjects/Playground/LolJsons/current_
 akali_dict = ""
 with open(f"/Users/laurin/Documents/PycharmProjects/Playground/LolJsons/current_champions_json/Akali.json", "r") as read_file:
     akali_dict = json.load(read_file)
-    
-    
+
+
 sera: Seraphine = Seraphine(sera_dict)
 sera.total_ability_power_flat: float = 100
 sera.enemy_health = 1000
@@ -83,10 +83,8 @@ print(akali.auto_attack().damage)
 print(akali.q_action(3).damage)
 print(akali.e_action(1, second_instance=False).damage)
 print(akali.e_action(1).damage)
-print(akali.r_action(0, 600)[1].damage) # not working second r problems
+print(akali.r_action(0, 600)[1].damage)  # not working second r problems
 print(akali.r_action(0, 700, False).damage)
 print(akali.r_action(0, 700, second_instance=False).damage)
 print(akali.auto_attack())
 print("\n"*5)
-
-

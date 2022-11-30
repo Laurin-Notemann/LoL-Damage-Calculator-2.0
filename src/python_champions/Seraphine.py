@@ -19,7 +19,6 @@ class Seraphine(Champion):
         self.missing_health_damage_amplifier: float = 0.05
         self.per_missing_health_percentage: float = 0.075
         self.missing_health_cap: float = 0.75
-        
 
     def increase_note_stacks(self):
         self.note_stacks += 1
