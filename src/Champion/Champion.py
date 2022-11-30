@@ -139,19 +139,9 @@ class Champion:
         self.ability_r: list[Ability] = get_abilities_data(
             "R", champ_dict, self.r_bounds)
 
-        self.add_scaling_stats_values_to_ability()
-
         self.enemy_health = 0.0
 
-    def add_scaling_stats_values_to_ability(self):
-        for i in range(len(self.ability_q)):
-            self.ability_q[i].set_scaling_values(self.scaling_stats_values)
-        for i in range(len(self.ability_w)):
-            self.ability_w[i].set_scaling_values(self.scaling_stats_values)
-        for i in range(len(self.ability_e)):
-            self.ability_e[i].set_scaling_values(self.scaling_stats_values)
-        for i in range(len(self.ability_r)):
-            self.ability_r[i].set_scaling_values(self.scaling_stats_values)
+        self.set_total_value_to_based_on_level_and_item_stats()
 
     def set_champion_level(self, current_level):
         self.champion_level = current_level
@@ -162,9 +152,6 @@ class Champion:
 
     def set_enemy_health(self, enemy_health):
         self.enemy_health = enemy_health
-
-    def per_level_scaling(self, base_stat, growth_stat, round_by):
-        return round(base_stat + growth_stat * (self.champion_level - 1) * (0.7025 + 0.0175 * (self.champion_level - 1)), round_by)
 
     def set_base_stats_based_on_level(self):
         self.health_points_based_on_level = self.per_level_scaling(
@@ -191,51 +178,6 @@ class Champion:
         self.bonus_attack_speed = self.per_level_scaling(
             0,
             self.attack_speed_per_level / 100, 4)
-
-    def set_scaling_values(self):
-        self.scaling_stats_values = {
-            "AD": ScalingValue("AD", self.total_attack_damage),
-            "BONUS_AD": ScalingValue("BONUS_AD", self.bonus_attack_damage),
-            "AP": ScalingValue("AP", self.total_ability_power_flat)
-        }
-
-    def set_total_value_to_based_on_level_and_item_stats(self):
-        # First we add all the stats from the items that are chosen
-        self.add_item_stats()
-        self.add_mythic_stats()
-        self.add_special_item_stats()
-
-        #  Then we calculate the total damage based on the base stats and the bonus stats
-        self.set_base_stats_based_on_level()
-        self.set_total_stats()
-        self.set_scaling_values()
-        self.add_scaling_stats_values_to_ability()
-
-    def auto_attack(self):
-        damage_type = "PHYSICAL_DAMAGE"
-        damage: Damage = Damage(damage_type)
-        damage.set_damage(self.total_attack_damage)
-        return damage
-
-    def passive_action(self):
-        pass
-
-    def q_action(self, skill_level=-1):
-        pass
-
-    def w_action(self, skill_level=-1):
-        pass
-
-    def e_action(self, skill_level=-1):
-        pass
-
-    def r_action(self, skill_level=-1):
-        pass
-
-    def skill_level_inside_bounds(self, skill_level: int, ability: Ability):
-        if ability.bounds.lower <= skill_level < ability.bounds.upper:
-            return True
-        return False
 
     def add_item_stats(self):
         for i in range(1, 7):
@@ -367,12 +309,75 @@ class Champion:
         self.total_slow_resistance = round(1 - self.total_slow_resistance, 4)
 
         self.total_critical_chance = round(self.total_critical_chance, 4)
+    
+    def set_scaling_values(self):
+        self.scaling_stats_values = {
+            "AD": ScalingValue("AD", self.total_attack_damage),
+            "BONUS_AD": ScalingValue("BONUS_AD", self.bonus_attack_damage),
+            "AP": ScalingValue("AP", self.total_ability_power_flat)
+        }
+
+    def add_scaling_stats_values_to_ability(self):
+        for i in range(len(self.ability_q)):
+            self.ability_q[i].set_scaling_values(self.scaling_stats_values)
+        for i in range(len(self.ability_w)):
+            self.ability_w[i].set_scaling_values(self.scaling_stats_values)
+        for i in range(len(self.ability_e)):
+            self.ability_e[i].set_scaling_values(self.scaling_stats_values)
+        for i in range(len(self.ability_r)):
+            self.ability_r[i].set_scaling_values(self.scaling_stats_values)
+            
+    def set_total_value_to_based_on_level_and_item_stats(self):
+        # First we add all the stats from the items that are chosen
+        self.add_item_stats()
+        self.add_mythic_stats()
+        self.add_special_item_stats()
+
+        #  Then we calculate the total damage based on the base stats and the bonus stats
+        self.set_base_stats_based_on_level()
+        self.set_total_stats()
+        self.set_scaling_values()
+        self.add_scaling_stats_values_to_ability()
+
+    def auto_attack(self):
+        damage_type = "PHYSICAL_DAMAGE"
+        damage: Damage = Damage(damage_type)
+        damage.set_damage(self.total_attack_damage)
+        return damage
+
+    def passive_action(self):
+        pass
+
+    def q_action(self, skill_level=-1):
+        pass
+
+    def w_action(self, skill_level=-1):
+        pass
+
+    def e_action(self, skill_level=-1):
+        pass
+
+    def r_action(self, skill_level=-1):
+        pass
+
+    def per_level_scaling(self, base_stat, growth_stat, round_by):
+        return round(base_stat + growth_stat * (self.champion_level - 1) * (0.7025 + 0.0175 * (self.champion_level - 1)), round_by)
+    
+    def skill_level_inside_bounds(self, skill_level: int, ability: Ability):
+        if ability.bounds.lower <= skill_level < ability.bounds.upper:
+            return True
+        return False
 
     def __getstate__(self):
         state = self.__dict__.copy()
         del state["champ_dict"]
         del state["stats"]
         del state["item_dict"]
+        del state["scaling_stats_values"]
+        del state["abiltiy_q"]
+        del state["abiltiy_w"]
+        del state["abiltiy_e"]
+        del state["abiltiy_r"]
         return state
 
     def __setstate__(self, state):
