@@ -1,4 +1,7 @@
 from python_items.Item import Item
+from Damage.Damage import Damage
+from Damage.ScalingValue import ScalingValue
+from Damage.DamageType import DamageType
 
 
 class LiandrysAnguish(Item):
@@ -8,14 +11,14 @@ class LiandrysAnguish(Item):
         self.is_mythic: bool = True
         self.is_uniqe: bool = True
 
-    def item_passives_dmg(self, champions_scaling_param: str = "", champion_scaling_value: float = 0, seconds_applied: int = 4, enemy_max_health: float = 0):
-        damage_type: str = "MAGIC_DAMAGE"
-        damage: float = 0
+    def item_passives_dmg(self, scaling_values: dict[str:ScalingValue] = "", seconds_applied: int = 4, enemy_max_health: float = 0):
+        damage = Damage(DamageType.MAGIC.value)
+        damage_value: float = 0
 
-        if champions_scaling_param == "AP":
-            damage = (50 + (champion_scaling_value * 0.06) +
-                      (enemy_max_health * 0.04)) / 4
+        for key, value in scaling_values.items():
+            if key == "AP":
+                damage_value = (50 + (value.value * 0.06) +
+                                (enemy_max_health * 0.04)) / 4
 
-            damage = damage * seconds_applied
-
-        return [damage_type, damage, None]
+            damage.set_damage(damage_value * seconds_applied)
+            return damage
