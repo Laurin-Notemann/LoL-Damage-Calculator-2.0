@@ -7,4 +7,4 @@ class ScalingValue:
         
 
     def additional_scaled_value(self, skill_level: int, attribute: Attribute):
-        return (attribute.values[skill_level]/100) * self.value
+        return (attribute.values[skill_level]/100) * self.value      

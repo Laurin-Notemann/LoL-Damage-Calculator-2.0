@@ -1,9 +1,8 @@
 from Champion.Champion import Champion
-from ChampionAbility.ScalingValue import ScalingValue
-from ChampionAbility.MissingHealthData import MissingHealthData
-from ChampionAbility.Damage import Damage
+from Damage.MissingHealthData import MissingHealthData
+from Damage.Damage import Damage
 from ChampionAbility.Ability import Ability
-from ChampionAbility.DamageType import DamageType
+from Damage.DamageType import DamageType
 
 
 class Seraphine(Champion):

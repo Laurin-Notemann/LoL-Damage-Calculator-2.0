@@ -1,7 +1,6 @@
 from ChampionAbility.Effect import Effect
 from ChampionAbility.Attribute import Attribute
-from ChampionAbility.ScalingValue import ScalingValue
-from ChampionAbility.Bounds import Bounds
+from Damage.ScalingValue import ScalingValue
 
 
 class Damage:

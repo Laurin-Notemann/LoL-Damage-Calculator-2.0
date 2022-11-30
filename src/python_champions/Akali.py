@@ -1,8 +1,8 @@
 from Champion.Champion import Champion
 from ChampionAbility.Ability import Ability
-from ChampionAbility.Damage import Damage
-from ChampionAbility.DamageType import DamageType
-from ChampionAbility.MissingHealthData import MissingHealthData
+from Damage.Damage import Damage
+from Damage.DamageType import DamageType
+from Damage.MissingHealthData import MissingHealthData
 
 
 class Akali(Champion):

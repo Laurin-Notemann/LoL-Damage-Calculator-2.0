@@ -1,8 +1,8 @@
 from ChampionAbility.Bounds import Bounds
 from ChampionAbility.Ability import Ability
-from ChampionAbility.Damage import ScalingValue
+from Damage.Damage import ScalingValue
 from ChampionAbility.get_abilities_data import get_abilities_data
-from ChampionAbility.Damage import Damage
+from Damage.Damage import Damage
 
 
 class Champion:

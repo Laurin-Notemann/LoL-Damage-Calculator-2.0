@@ -1,8 +1,8 @@
 from ChampionAbility.Bounds import Bounds
 from ChampionAbility.Effect import Effect
-from ChampionAbility.Damage import Damage
-from ChampionAbility.ScalingValue import ScalingValue
-from ChampionAbility.MissingHealthData import MissingHealthData
+from Damage.Damage import Damage
+from Damage.ScalingValue import ScalingValue
+from Damage.MissingHealthData import MissingHealthData
 
 
 class Ability:

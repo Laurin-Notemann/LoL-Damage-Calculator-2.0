@@ -1,7 +1,7 @@
 from Champion.Champion import Champion
 from ChampionAbility.Ability import Ability
-from ChampionAbility.Damage import Damage
-from ChampionAbility.DamageType import DamageType
+from Damage.Damage import Damage
+from Damage.DamageType import DamageType
 
 
 class Aatrox(Champion):

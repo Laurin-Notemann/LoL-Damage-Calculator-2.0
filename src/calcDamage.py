@@ -3,7 +3,7 @@ from python_champions.Seraphine import Seraphine
 from python_champions.Aatrox import Aatrox
 from python_champions.Ahri import Ahri
 from python_champions.Akali import Akali
-from ChampionAbility.ScalingValue import ScalingValue
+from Damage.ScalingValue import ScalingValue
 import json
 
 sera_dict= ""
