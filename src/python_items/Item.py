@@ -1,3 +1,4 @@
+from Damage.ScalingValue import ScalingValue
 class Item:
     def __init__(self, item_dict):
         self.item_dict: dict = item_dict
@@ -100,7 +101,7 @@ class Item:
     def item_active_dmg(self):
         pass
 
-    def item_passives_dmg(self, champions_scaling_param: str = "", champion_scaling_value=0):
+    def item_passives_dmg(self, scaling_values: dict[str:ScalingValue] = {}):
         pass
 
     def __getstate__(self):

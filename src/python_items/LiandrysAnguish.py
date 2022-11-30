@@ -11,7 +11,7 @@ class LiandrysAnguish(Item):
         self.is_mythic: bool = True
         self.is_uniqe: bool = True
 
-    def item_passives_dmg(self, scaling_values: dict[str:ScalingValue] = "", seconds_applied: int = 4, enemy_max_health: float = 0):
+    def item_passives_dmg(self, scaling_values: dict[str:ScalingValue] = {}, seconds_applied: int = 4, enemy_max_health: float = 0):
         damage = Damage(DamageType.MAGIC.value)
         damage_value: float = 0
 
