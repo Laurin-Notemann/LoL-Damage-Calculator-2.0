@@ -105,7 +105,7 @@ return_dict = {
     "damage_of_abilities": {
         "actionNumber": "damagenumber"
     }
-}"""
+}"""'''
 test_data = {
     "abilityLevel": [1, 3, 4, 2],
     "championLevel": 8,
@@ -138,3 +138,33 @@ print(t[2:])
 
 a = []
 print(len(a))
+
+'''
+'''
+
+def get_amp_based_on_missing_health(enm_miss,  dmg_amp_static, miss_health_static,
+                                    missing_health_cap):
+    miss_iter = miss_health_static
+    dmg_amp = dmg_amp_static
+    with open("test.txt", "w") as file:
+    
+        for i in range(0, int((missing_health_cap / miss_iter)) + 1):
+            if enm_miss < miss_health_static:
+                dmg_amp = 0
+                break
+            elif miss_iter < enm_miss < (
+                    miss_iter + miss_health_static) or enm_miss == miss_iter:
+                break
+            miss_iter = miss_iter + miss_health_static
+            dmg_amp = dmg_amp + dmg_amp_static
+            file.write(str(miss_iter)+ "\n"+ str(dmg_amp))
+            file.write("\n"*2)
+    # dmg_amp = 
+     
+    return round(dmg_amp, 4)
+
+
+dmg_amp = 0.0286/2500
+miss_health = 0.01/2500
+cap = 0.7
+print(get_amp_based_on_missing_health(0.7, dmg_amp, miss_health, cap))'''

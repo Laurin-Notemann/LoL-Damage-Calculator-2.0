@@ -46,9 +46,21 @@ ahri.set_total_value_to_based_on_level_and_item_stats()
 
 
 print("SERAPHINE:")
-print(sera.auto_attack().damage)
 print(sera.q_action(1000, 2).damage)
-print(sera.q_action(1000-140, 2).damage)
+print(sera.q_action(850, 2).damage)
+print(sera.q_action(844, 2).damage)
+print(sera.q_action(700, 2).damage)
+print("\n"*2)
+print("AKALI:")
+print(akali.r_action(0, 1000)[1].damage)  # not working second r problems
+print(akali.r_action(0, 890, False).damage)  # not working second r problems
+print(akali.r_action(0, 999.9, False).damage)  # not working second r problems
+
+print(akali.r_action(0, 650, False).damage)
+print(akali.r_action(0, 300, False).damage)
+# print(akali.r_action(0, 300, second_instance=False).damage)
+'''print(sera.auto_attack().damage)
+
 print(sera.e_action(1).damage)
 print(sera.r_action(0).damage)
 print(sera.auto_attack())
@@ -78,13 +90,11 @@ print(ahri.e_action(1).damage)
 print(ahri.r_action(0, 2)[0].damage)
 print("\n"*5)
 
-print("AKALI:")
 print(akali.auto_attack().damage)
 print(akali.q_action(3).damage)
 print(akali.e_action(1, second_instance=False).damage)
 print(akali.e_action(1).damage)
-print(akali.r_action(0, 600)[1].damage)  # not working second r problems
-print(akali.r_action(0, 700, False).damage)
-print(akali.r_action(0, 700, second_instance=False).damage)
+
 print(akali.auto_attack())
 print("\n"*5)
+'''

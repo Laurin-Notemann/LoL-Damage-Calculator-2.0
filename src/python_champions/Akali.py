@@ -75,7 +75,7 @@ class Akali(Champion):
                 self.per_missing_health_percentage,
                 self.missing_health_cap
             )
-            print(missing_health.amplifier)
+            # print(missing_health.amplifier)
             damage_first_r: Damage = r.get_damage(skill_level)
             damage_second_r: Damage = r.get_damage_based_on_enemy_health(
                 skill_level, missing_health, 2)

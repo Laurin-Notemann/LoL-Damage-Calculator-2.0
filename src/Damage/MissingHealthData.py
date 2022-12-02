@@ -21,11 +21,9 @@ class MissingHealthData:
     def update_missing_health(self, enemy_current_hp: float):
         self.enemy_missing_health = get_enemy_missing_health(
             self.enemy_total_health, enemy_current_hp)
-        print(self.enemy_missing_health)
         self.amplifier = get_amp_based_on_missing_health(
             self.enemy_missing_health,
             self.damage_amplifier,
             self.per_percentage_of_missing_health,
             self.missing_health_cap
         )
-        print(self.amplifier)
